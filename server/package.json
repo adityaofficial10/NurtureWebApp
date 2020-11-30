@@ -4,7 +4,8 @@
   "description": "Full Stack Web App",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon datastore.js"
   },
   "author": "Aditya R Rudra",
   "license": "ISC",
@@ -15,7 +16,8 @@
     "express-fileupload": "^1.2.0",
     "lodash": "^4.17.20",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.10.18",
+    "mongoose": "^4.13.21",
+    "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2"
   }
