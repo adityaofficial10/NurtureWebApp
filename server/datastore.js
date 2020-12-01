@@ -185,11 +185,50 @@ requestSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+const slotSchema = new Schema({
+
+  slotId:{
+    type:Number
+  },
+  mentor:{
+    type:Schema.Types.Number,
+    ref:'mentors',
+    required:true
+  },
+  date:{
+    type:Date,
+    required:true
+  },
+  startTime:{
+    type:Date,
+    required:true
+  },
+  endTime:{
+    type:Date,
+    required:true
+  },
+  firstDate:{
+    type:Date,
+    required:true
+  },
+  lastDate:{
+    type:Date,
+    required:true
+  }
+});
+
+slotSchema.plugin(autoIncrement.plugin, {
+    model: 'Slot',
+    field:'slotId',
+    startAt: 1,
+    incrementBy: 1
+});
 
 const Mentor = connection.model('Mentor',mentorSchema);
 const User = connection.model('User',userSchema);
 const Event = connection.model('Event',eventSchema);
 const Request = connection.model('Request',requestSchema);
+const Slot = connection.model('Slot',slotSchema);
 
 
 /*
