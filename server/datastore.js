@@ -17,6 +17,9 @@ autoIncrement.initialize(connection);
 
 const mentorSchema = new Schema({
 
+  mentorId:{
+    type:Number
+  },
   name:{
     type:String,
     required:true
@@ -48,12 +51,16 @@ const mentorSchema = new Schema({
 
 mentorSchema.plugin(autoIncrement.plugin, {
     model: 'Mentor',
+    field:'mentorId',
     startAt: 1,
     incrementBy: 1
 });
 
-const studentSchema = new Schema({
+const userSchema = new Schema({
 
+  userId:{
+    type:Number
+  },
   name:{
     type:String,
     required:true
@@ -80,11 +87,131 @@ const studentSchema = new Schema({
   }
 });
 
-studentSchema.plugin(autoIncrement.plugin, {
-    model: 'Student',
+userSchema.plugin(autoIncrement.plugin, {
+    model: 'User',
+    field:'userId',
     startAt: 1,
     incrementBy: 1
 });
 
+const eventSchema = new Schema({
+
+  eventId:{
+    type:Number
+  },
+
+  title:{
+    type:String,
+    required:true
+  },
+  description:{
+    type:String
+  },
+  mentor: {
+    type:Schema.Types.Number,
+    ref:'mentors',
+    required:true
+  },
+  student: {
+    type:Schema.Types.Number,
+    ref:'users',
+    required:true
+  },
+  date:{
+    type:Date,
+    required:true
+  },
+  startTime:{
+    type:Date,
+    required:true
+  },
+  endTime:{
+    type:Date,
+    required:true
+  }
+});
+
+eventSchema.plugin(autoIncrement.plugin, {
+    model: 'Event',
+    field:'eventId',
+    startAt: 1,
+    incrementBy: 1
+});
+
+const requestSchema = new Schema({
+
+  requestId:{
+    type:Number
+  },
+  title:{
+    type:String,
+    required:true
+  },
+  description:{
+    type:String,
+    required:true
+  },
+  student:{
+    type:Schema.Types.Number,
+    ref:'users',
+    required:true
+  },
+  mentor:{
+    type:Schema.Types.Number,
+    ref:'mentors',
+    required:true
+  },
+  date:{
+    type:Date,
+    required:true
+  },
+  startTime:{
+    type:Date,
+    required:true
+  },
+  endTime:{
+    type:Date,
+    required:true,
+  },
+  duration:{
+    type:Date
+  }
+});
+
+requestSchema.plugin(autoIncrement.plugin, {
+    model: 'Request',
+    field:'requestId',
+    startAt: 1,
+    incrementBy: 1
+});
+
+
 const Mentor = connection.model('Mentor',mentorSchema);
-const Student = connection.model('Student',studentSchema);
+const User = connection.model('User',userSchema);
+const Event = connection.model('Event',eventSchema);
+const Request = connection.model('Request',requestSchema);
+
+
+/*
+const mtr = Mentor.findOne({name:"Jack"},'_id mentorId');
+const st = User.findOne({name:"Aditya"},'_id userId');
+
+
+const req = new Request({
+  title:"Stranger Things",
+  description:"Nothing",
+  mentor:mtr._fields._id,
+  student:st._fields._id,
+  date:"2020-12-19",
+  startTime:"2020-12-19T08:00:00",
+  endTime:"2020-12-19T11:00:00",
+  duration:dur
+});
+
+req.save(function(err){
+
+  if(err) console.error(err);
+
+  console.log("Success");
+});
+*/
