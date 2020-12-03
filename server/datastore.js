@@ -254,3 +254,12 @@ req.save(function(err){
   console.log("Success");
 });
 */
+
+
+module.exports = {
+  Mentor,
+  User,
+  Event,
+  Request,
+  Slot
+};
