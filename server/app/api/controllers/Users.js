@@ -15,7 +15,7 @@ module.exports = {
     });
  },
 
-authenticate: function(req, res, next) {
+login: function(req, res, next) {
   userModel.findOne({email:req.body.email}, function(err, userInfo){
      if (err) {
       next(err);

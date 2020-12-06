@@ -1,5 +1,12 @@
+require('dotenv').config({
+    path:'config/.env'
+});
+
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://localhost:27017/myDB';
+const username = process.env.ATLAS_USERNAME;
+const password = process.env.ATLAS_PASSWORD;
+const DB = process.env.MONGO_DATABASE_NAME;
+const mongoDB = `mongodb+srv://${username}:${password}@cluster0.jgt5f.mongodb.net/${DB}?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB,{useNewUrlParser:true,useUnifiedTopology:true});
 mongoose.Promise = global.Promise;
 
