@@ -9,7 +9,6 @@ const fileUpload = require('express-fileupload');
 const multer = require('multer');
 const aws = require('aws-sdk');
 const logger = require('morgan');
-const movies = require('./routes/movies') ;
 const users = require('./routes/users');
 const mentors = require('./routes/mentors');
 const events = require('./routes/events');
@@ -34,7 +33,6 @@ res.json({"description" : "This is a web app developed for Nurture..."});
 app.use('/users', users);
 app.use('/mentors',mentors);
 // private route
-app.use('/movies', validateUser, movies);
 app.use('/events',validateUser,events);
 app.use('/requests',validateUser,requests);
 app.use('/slots',validateUser,slots);
