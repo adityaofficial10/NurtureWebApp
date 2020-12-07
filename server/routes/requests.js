@@ -5,6 +5,7 @@ const requestController = require('../app/api/controllers/requests');
 router.get('/', requestController.getAll);
 router.post('/', requestController.create);
 router.get('/:requestId', requestController.getById);
+router.get('/:mentorId',requestController.getRequestsByMentor);
 router.put('/:requestId', requestController.updateById);
 router.delete('/:requestId', requestController.deleteById);
 

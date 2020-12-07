@@ -4,6 +4,6 @@ const mentorController = require('../app/api/controllers/mentors');
 
 router.post('/signup', mentorController.create);
 router.post('/login', mentorController.login);
-
+router.get('/approveRequest/:requestId',mentorController.approveRequest);
 
 module.exports = router;

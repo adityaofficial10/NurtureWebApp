@@ -1,8 +1,8 @@
 const requestModel = require('../models/requests');
-
+const mentorModel = require('../models/mentors');
 module.exports = {
  getById: function(req, res, next) {
-  console.log(req.body);
+
   requestModel.findById(req.params.requestId, function(err, requestInfo){
    if (err) {
     next(err);
@@ -51,5 +51,20 @@ create: function(req, res, next) {
        res.json({status: "success", message: "Request added successfully!!!", data: result});
       
     });
+ },
+ getRequestsByMentor:function(req,res,next) {
+   mentorModel.findOne(req.params.mentorId,function(err,mentorInfo){
+      if(err)
+       next(err);
+      else{
+        console.log(mentorInfo._id);
+        requestModel.find({mentor:mentorInfo._id.id},function(err,requests){
+            if(err)
+             next(err);
+            else
+             res.json({status:"success",message:"Requests for the mentor found successfully..",data:requests});
+        });
+      }
+   });
  },
 };

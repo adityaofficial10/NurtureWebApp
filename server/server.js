@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const multer = require('multer');
 const aws = require('aws-sdk');
 const logger = require('morgan');
+const requestsForMentors = require('./routes/requestForMentors');
 const users = require('./routes/Users');
 const mentors = require('./routes/mentors');
 const events = require('./routes/events');
@@ -35,6 +36,7 @@ app.use('/mentors',mentors);
 // private route
 app.use('/events',validateUser,events);
 app.use('/requests',validateUser,requests);
+app.use('/request',validateMentor,requestsForMentors);
 app.use('/slots',validateUser,slots);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
@@ -50,7 +52,18 @@ function validateUser(req, res, next) {
       next();
     }
   });
-  
+}
+function validateMentor(req, res, next) {
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+    if (err) {
+      res.json({status:"error", message: err.message, data:null});
+    }else{
+      // add user id to request
+      console.log(decoded);
+      req.body.mentorId = decoded.id;
+      next();
+    }
+  });
 }
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error
