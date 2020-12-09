@@ -5,7 +5,7 @@ const eventModel = require('../models/events');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 const { sendMailOnRegister,sendEmailOnSignIn, sendEmailOnApproval } = require('../helpers/mail');
-
+const { mentorKey } = require('../helpers/maps');
 module.exports = {
 
  create: function(req, res, next) {
@@ -15,6 +15,7 @@ module.exports = {
        next(err);
       else{
          sendMailOnRegister(result);
+         mentorKey(result._id,result.name);
          res.json({status: "success", message: "Mentor added successfully!!!", data: result});
       }
        
@@ -36,32 +37,6 @@ login: function(req, res, next) {
          }
     }
   });
- },
- approveRequest: function(req,res,next) {
-   requestModel.findByIdAndRemove(req.body.requestId, function(err, requestInfo){
-      if(err)
-       next(err);
-      else {
-         eventModel.create({title:requestInfo.title,description:requestInfo.description,mentor:requestInfo.mentor,student:requestInfo.student,date:requestInfo.date,startTime:requestInfo.startTime,endTime:requestInfo.endTime},function(err,eventInfo){
-            if(err)
-             next(err);
-            else{
-               userModel.findById(requestInfo.student,function(err,user){
-
-                  if(err)
-                   next(err);
-                  else{
-                     mentorModel.findById(req.body.mentorId,function(err,mentorInfo){
-                        sendEmailOnApproval(user,mentorInfo,{date:eventInfo.date,startTime:eventInfo.startTime});
-                     });
-                  }
-               });
-               res.json({status:"success",message:"Request approved",data:eventInfo});
-            }
-             
-         });
-      }
-     });
  },
  getRequests:function(req,res,next){
     console.log(req.body);

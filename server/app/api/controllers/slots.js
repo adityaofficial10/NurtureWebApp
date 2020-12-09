@@ -1,4 +1,6 @@
 const slotModel = require('../models/slots');
+const { convertTimeFromStandard, getTimeFromInput } = require('../helpers/utility');
+const { login } = require('./mentors');
 
 module.exports = {
  getById: function(req, res, next) {
@@ -12,12 +14,15 @@ module.exports = {
  },
 getAll: function(req, res, next) {
   let slotsList = [];
-slotModel.find({}, function(err, slots){
+  console.log(req.body);
+  let today = new Date(req.query.date);
+slotModel.find({available:true}, function(err, slots){
    if (err){
     next(err);
    } else{
     for (let slot of slots) {
-     slotsList.push({id: slot._id, mentor: slot.mentor, firstDate: slot.firstDate, lastDate: slot.lastDate,startTime:slot.startTime,endTime:slot.endTime});
+     if(slot.date === today)
+     slotsList.push({id: slot._id, mentor: slot.mentor, date:slot.date,startTime:slot.startTime,endTime:slot.endTime});
     }
     res.json({status:"success", message: "Slots list found!!!", data:{slots: slotsList}});
        
@@ -25,7 +30,7 @@ slotModel.find({}, function(err, slots){
 });
  },
 updateById: function(req, res, next) {
-  slotModel.findByIdAndUpdate(req.params.slotId,{startTime:req.body.startTime,endTime:req.body.endTime,firstDate:req.body.firstDate,lastDate:req.body.lastDate}, function(err, slotInfo){
+  slotModel.findByIdAndUpdate(req.params.slotId,{startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date}, function(err, slotInfo){
 if(err)
     next(err);
    else {
@@ -43,7 +48,8 @@ deleteById: function(req, res, next) {
   });
  },
 create: function(req, res, next) {
-  slotModel.create({ mentor: req.body.mentorId,startTime:req.body.startTime,endTime:req.body.endTime,firstDate:req.body.firstDate,lastDate:req.body.lastDate}, function (err, result) {
+  console.log(req.body.date);
+  slotModel.create({ mentor: req.body.mentorId,startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date}, function (err, result) {
       if (err) 
        next(err);
       else

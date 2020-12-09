@@ -19,13 +19,13 @@ const SlotSchema = new Schema({
       type:Date,
       required:true
     },
-    firstDate:{
+    date:{
       type:Date,
       required:true
     },
-    lastDate:{
-      type:Date,
-      required:true
+    available:{
+      type:Boolean,
+      default:true
     }
   });
 

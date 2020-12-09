@@ -1,5 +1,11 @@
 const requestModel = require('../models/requests');
 const mentorModel = require('../models/mentors');
+const slotModel = require('../models/slots');
+const userModel = require('../models/Users');
+const eventModel = require('../models/events');
+const { checkIfFree, allotSlot } = require('../helpers/allotSlot');
+const { convertTimeFromStandard, getTimeFromInput } = require('../helpers/utility');
+
 module.exports = {
  getById: function(req, res, next) {
 
@@ -44,12 +50,29 @@ deleteById: function(req, res, next) {
   });
  },
 create: function(req, res, next) {
-  requestModel.create({ title: req.body.title,description:req.body.description,mentor:req.body.mentorId,student:req.body.studentId, date: req.body.date,startTime:req.body.startTime,endTime:req.body.endTime }, function (err, result) {
+  requestModel.create({ title: req.body.title,description:req.body.description,mentor:req.body.mentorId,student:req.body.userId, date: req.body.date,startTime:req.body.startTime,endTime:req.body.endTime }, function (err, result) {
       if (err) 
        next(err);
-      else
-       res.json({status: "success", message: "Request added successfully!!!", data: result});
-      
+      else{ 
+        mentorModel.findById(req.body.mentorId,function(err,mentorInfo){
+          slotModel.find({mentor:mentorInfo._id,startTime:result.startTime,endTime:result.endTime,date:result.date},function(err,slot){
+            if(err)
+             next(err);
+            else{
+              const d = allotSlot(result,slot);
+              //.then((data)=>{
+                if(d){
+                  res.json({status:'success',msg:'Slot allotted..',data:data});
+                }
+                else
+                res.json({status:'failed',msg:'This slot is occupied..',data:null})
+              //}).catch((error)=>{
+                //console.error(error);
+              //});
+            }              
+          });
+        });     
+      }     
     });
  },
  getRequestsByMentor:function(req,res,next) {

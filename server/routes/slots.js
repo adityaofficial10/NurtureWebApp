@@ -5,7 +5,7 @@ const slotController = require('../app/api/controllers/slots');
 router.get('/', slotController.getAll);
 router.post('/', slotController.create);
 router.get('/:slotId', slotController.getById);
-router.put('/:slottId', slotController.updateById);
+router.put('/:slotId', slotController.updateById);
 router.delete('/:slotId', slotController.deleteById);
 
 module.exports = router;

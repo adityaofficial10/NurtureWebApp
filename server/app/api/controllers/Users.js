@@ -2,8 +2,8 @@ const userModel = require('../models/Users');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 const { sendMailOnRegister,sendEmailOnSignIn } = require('../helpers/mail');
-
-module.exports = {
+const { userKey,printUsers } = require('../helpers/maps');
+ module.exports = {
 
  create: function(req, res, next) {
   
@@ -12,6 +12,7 @@ module.exports = {
        next(err);
       else{
          sendMailOnRegister(result);
+         userKey(result._id,result.name);
          res.json({status: "success", message: "User added successfully!!!", data: result});
       }
            
@@ -26,6 +27,7 @@ login: function(req, res, next) {
          if(bcrypt.compareSync(req.body.password, userInfo.password)) {
           const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), { expiresIn: '1h' });
           sendEmailOnSignIn(userInfo);
+          printUsers();
           res.json({status:"success", message: "user found!!!", data:{user: userInfo, token:token}});
          }else{
           res.json({status:"error", message: "Invalid email/password!!!", data:null});

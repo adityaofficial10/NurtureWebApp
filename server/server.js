@@ -15,6 +15,8 @@ const mentors = require('./routes/mentors');
 const events = require('./routes/events');
 const requests = require('./routes/requests');
 const slots = require('./routes/slots');
+const userModel = require('./app/api/models/Users');
+const mentorModel = require('./app/api/models/mentors');
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
 var jwt = require('jsonwebtoken');
@@ -37,7 +39,7 @@ app.use('/mentors',mentors);
 app.use('/events',validateUser,events);
 app.use('/requests',validateUser,requests);
 app.use('/request',validateMentor,requestsForMentors);
-app.use('/slots',validateUser,slots);
+app.use('/slots',validateMentor,slots);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
@@ -47,9 +49,17 @@ function validateUser(req, res, next) {
       res.json({status:"error", message: err.message, data:null});
     }else{
       // add user id to request
-      console.log(decoded);
       req.body.userId = decoded.id;
-      next();
+      userModel.findById(decoded.id,function(err,userInfo){
+      if(err)
+       next(err);
+      else{
+       req.body.userName = userInfo.name;
+       req.body.userEmail = userInfo.email;
+       next();
+      }
+      });
+      
     }
   });
 }
@@ -59,9 +69,17 @@ function validateMentor(req, res, next) {
       res.json({status:"error", message: err.message, data:null});
     }else{
       // add user id to request
-      console.log(decoded);
       req.body.mentorId = decoded.id;
-      next();
+      mentorModel.findById(decoded.id,function(err,mentorInfo){
+        if(err)
+         next(err);
+        else
+        {
+          req.body.mentorName = mentorInfo.name;
+          req.body.mentorEmail = mentorInfo.email;
+          next();
+        }
+        });    
     }
   });
 }
@@ -86,3 +104,4 @@ var port = process.env.PORT;
 app.listen(port, function(){
  console.log(`Server running on port ${port}...`);
 });
+

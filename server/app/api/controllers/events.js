@@ -1,8 +1,13 @@
 const eventModel = require('../models/events');
+const slotModel = require('../models/slots');
+const { convertTimeFromStandard, getTimeFromInput } = require('../helpers/utility');
+const { allotSlot } = require('../helpers/allotSlot');
+const { userKey, mentorKey, getMentorName, getUserName } = require('../helpers/maps');
+const { sendEmailOnApproval } = require('../helpers/mail');
 
 module.exports = {
  getById: function(req, res, next) {
-  console.log(req.body);
+
   eventModel.findById(req.params.eventId, function(err, eventInfo){
    if (err) {
     next(err);
@@ -44,13 +49,34 @@ deleteById: function(req, res, next) {
   });
  },
 create: function(req, res, next) {
-  console.log(req.body);
-  eventModel.create({ title: req.body.title,description:req.body.description,mentor:req.body.mentorId,student:req.body.studentId, date: req.body.date,startTime:req.body.startTime,endTime:req.body.endTime }, function (err, result) {
-      if (err) 
-       next(err);
-      else
-       res.json({status: "success", message: "Event added successfully!!!", data: result});
+  const evt = new eventModel({ title: req.body.title,description:req.body.description,mentor:req.body.mentorId,student:req.body.userId, date: req.body.date,startTime:req.body.startTime,endTime:req.body.endTime });
+  
+  const dt = allotSlot(req.body.userName,evt,{startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date}).then((ok)=>{
+    
+    console.log(ok);
+    if(ok === 1){
       
+      slotModel.updateOne({startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date,mentor:req.body.mentorId},{available:false},function(err,slotInfo){
+        if(err)
+         next(err);
+        else{
+          sendEmailOnApproval({name:req.body.userName,email:req.body.userEmail},{startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date});
+        }
     });
+      evt.save(function(err,eventInfo){
+        if(err)
+         next(err);
+        else
+        res.json({code:1,status:'success',message:'The slot is booked successfully..',data:eventInfo})
+      });
+    }
+    else if(ok === 0)
+    res.json({code:0,status:'failure',message:"Sorry, this request couldn't be completed.Try another slot...",data:null});
+    else
+    res.json({code:0,status:'failure',message:"Sorry, this slot doesn't exist..",data:null});
+
+  });
+ 
+  
  },
 };

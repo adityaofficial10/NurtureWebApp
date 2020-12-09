@@ -50,9 +50,9 @@ module.exports = {
     });
 
   },
-  sendEmailOnApproval:function(user,mentor,slot){
+  sendEmailOnApproval:function(user,slot){
 
-    var emailText = `Dear ${user.name}, \nYour request for a slot with mentor Mr. ${mentor.name} has been approved\n. Slot Details are as follows:\n1.Date:${slot.date}\n2.Time:${slot.startTime}.\nCheck your dashboard for more details.`;
+    var emailText = `Dear ${user.name}, \nYour request for a slot has been approved.\nSlot Details are as follows:\n1.Date:${slot.date}\n2.Time:${slot.startTime}.\nCheck your dashboard for more details.`;
     var mailOptions = {
       from: EMAIL,
       to: user.email,
