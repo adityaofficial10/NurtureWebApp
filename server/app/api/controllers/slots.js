@@ -21,8 +21,7 @@ slotModel.find({available:true}, function(err, slots){
     next(err);
    } else{
     for (let slot of slots) {
-     if(slot.date === today)
-     slotsList.push({id: slot._id, mentor: slot.mentor, date:slot.date,startTime:slot.startTime,endTime:slot.endTime});
+     slotsList.push({id: slot._id, mentor: slot.mentor, date:slot.date.toString(),startTime:slot.startTime.toString(),endTime:slot.endTime.toString()});
     }
     res.json({status:"success", message: "Slots list found!!!", data:{slots: slotsList}});
        
@@ -48,12 +47,13 @@ deleteById: function(req, res, next) {
   });
  },
 create: function(req, res, next) {
-  console.log(req.body.date);
   slotModel.create({ mentor: req.body.mentorId,startTime:req.body.startTime,endTime:req.body.endTime,date:req.body.date}, function (err, result) {
       if (err) 
        next(err);
-      else
-       res.json({status: "success", message: "Slot added successfully!!!", data: result});
+      else{
+        res.json({status: "success", message: "Slot added successfully!!!", data: result});
+      }
+       
       
     });
  },
