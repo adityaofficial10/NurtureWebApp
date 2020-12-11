@@ -28,7 +28,7 @@ export async function signup(data){
 export async function fetchMentors(){
    
     const mentors = await instance.get('/mentors/getAll');
-    return mentors.data.data;
+    return mentors.data;
 };
 
 export async function putSlot(token,mentorId,date,startTime,endTime){
@@ -41,16 +41,16 @@ export async function putSlot(token,mentorId,date,startTime,endTime){
     };
 
     const resp = await instance.post('/slots',querystring.stringify(data),{headers:{'x-access-token':token}});
-    return resp.data.data;
+    return resp.data;
 };
 
 export async function seeScheduledEvents(token){
     const resp = await instance.get('/request/events',{headers:{'x-access-token':token}});
-    return resp.data.data;
+    return resp.data;
 };
 
 export async function getSlotsForMentor(){
     
     const resp = await instance.post('/slots');
-    return resp.data.data;
+    return resp.data;
 };
