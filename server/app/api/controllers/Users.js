@@ -1,4 +1,5 @@
 const userModel = require('../models/Users');
+const eventModel = require('../models/events');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 const { sendMailOnRegister,sendEmailOnSignIn } = require('../helpers/mail');
@@ -34,5 +35,15 @@ login: function(req, res, next) {
          }
     }
   });
+ },
+
+ seeOptedEvents:function(req,res,next){
+   eventModel.find({student:req.body.userId},function(err,events){
+
+      if(err)
+       next(err);
+      else
+       res.json({status:'success',message:'Events fetched..',data:events});
+   });
  },
 }
