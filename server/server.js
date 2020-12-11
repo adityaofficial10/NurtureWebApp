@@ -26,13 +26,21 @@ app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 app.use(logger('dev'));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended: true}));
 app.get('/', function(req, res){
 res.json({"description" : "This is a web app developed for Nurture..."});
 });
 // public route
+app.get("/hello",function(req,res){
+  res.send("Hello World!");
+});
 app.use('/users', users);
 app.use('/mentors',mentors);
 // private route
@@ -90,6 +98,8 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+
 // handle errors
 app.use(function(err, req, res, next) {
  console.log(err);

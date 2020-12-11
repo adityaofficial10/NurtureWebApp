@@ -36,4 +36,13 @@ module.exports = {
                 console.error(err);
             });
     },
+    checkIfExistsMentor:function(email,dateOfBirth){
+
+        return mentorModel.find({email:email,dateOfBirth:dateOfBirth}).then(
+            (mentor)=>mentor.length,
+            (err)=>err,
+        ).catch((err)=>{
+            console.error(err);
+        });
+    },
 };

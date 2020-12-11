@@ -15,6 +15,7 @@ module.exports = {
 getAll: function(req, res, next) {
   let slotsList = [];
   console.log(req.body);
+  console.log(req.body.mentorName);
   let today = new Date(req.query.date);
 slotModel.find({available:true}, function(err, slots){
    if (err){

@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+/* eslint-disable no-undef */
 import './App.css';
+import { getSlotsForMentor } from './helpers/mentors';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ function App() {
+  
+
+  let [responseData,setResponseData] = React.useState('');
+  //let [token,setToken] = React.useState('');
+  const fetchData = (e) => {
+    e.preventDefault()
+    getSlotsForMentor().then((response)=>{
+        setResponseData(response);
+        console.log(response);
+    })
+    .catch((error) => {
+        throw new Error('Error fetching mentors...'+ error);
+    })
 }
+      return (
+        <div>
+        <button onClick = {(e)=>fetchData(e)} type ="button">Click for Data</button>
+        </div>
+      );
+}
+
+
 
 export default App;
