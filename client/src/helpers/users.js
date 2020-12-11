@@ -2,6 +2,7 @@ import instance from './api';
 import querystring from "querystring";
 import axios from 'axios';
 
+//Functionality implemented...
 export async function login(email,password){
 
         const data = {
