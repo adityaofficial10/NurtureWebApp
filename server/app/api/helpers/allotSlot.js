@@ -14,10 +14,10 @@ const { sendEmailOnApproval } = require('./mail');
 module.exports = {
 
     allotSlot:function(userName,event,slot){
-            
+            console.log(slot);
             return checkIfFree(event.mentor,slot).then(
                 (ok)=>ok,
                 (err)=>err
-            );           
+            );
     },
 };

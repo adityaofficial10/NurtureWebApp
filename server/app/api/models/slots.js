@@ -11,6 +11,9 @@ const SlotSchema = new Schema({
       ref:'mentors',
       required:true
     },
+    mentorName:{
+      type:String,
+    },
     startTime:{
       type:Date,
       required:true

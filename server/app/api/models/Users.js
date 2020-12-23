@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
  name: {
   type: String,
-  trim: true,  
+  trim: true,
   required: true,
  },
  email: {
@@ -32,7 +32,7 @@ const UserSchema = new Schema({
  },
  dateOfBirth:{
   type:Date,
-  required:true
+  default:'2000-12-20'
  }
 });
 

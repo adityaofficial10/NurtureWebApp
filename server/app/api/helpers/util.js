@@ -27,13 +27,51 @@ module.exports = {
         else
         return true;
     },
+    //{mentor:mentorId,startTime:slot.startTime,endTime:slot.endTime}
     checkIfSlotAvailable:function(mentorId,slot){
-
-        return slotModel.findOne({mentor:mentorId,startTime:slot.startTime,endTime:slot.endTime,date:slot.date}).then(
-            (slotInfo)=>  slotInfo?Number(slotInfo.available):-1,
-            (err) => err              
+        return slotModel.find({startTime:slot.startTime,endTime:slot.endTime,mentor:mentorId}).then(
+            (slotInfo)=>  slotInfo.length?Number(slotInfo[0].available):-1,
+            (err) => err
             ).catch((err)=>{
                 console.error(err);
             });
     },
+    checkIfExistsMentor:function(email){
+
+        return mentorModel.find({email:email}).then(
+            (mentor)=>mentor.length,
+            (err)=>err,
+        ).catch((err)=>{
+            console.error(err);
+        });
+    },
+    checkIfUserExists:function(email){
+
+      return userModel.find({email:email}).then(
+          (user)=>user.length,
+          (err)=>err,
+      ).catch((err)=>{
+          console.error(err);
+      });
+    },
+    convertTimeToStandard:function(time){
+
+      var date = time;
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var newformat = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const newTime = String(hours + ':' + minutes + ' ' + newformat);
+      return newTime;
+    },
+    compareTime:function(t1,t2){
+
+      t1.setHours(0,0,0,0);
+      t2.setHours(0,0,0,0);
+      console.log(t1);
+      console.log(t2);
+      return (t1.valueOf() === t2.valueOf());
+    }
 };

@@ -18,6 +18,9 @@ const EventSchema = new Schema({
       ref:'mentors',
       required:true
     },
+    mentorName:{
+      type:String,
+    },
     student: {
       type:Schema.Types.ObjectId,
       ref:'users',

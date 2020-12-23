@@ -39,7 +39,7 @@ module.exports = {
         return checkIfSlotAvailable(mentorId,slot).then(
             (ok)=>ok,
             (err)=>err
-            );    
+            );
     },
 
 };

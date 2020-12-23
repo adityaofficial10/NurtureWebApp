@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const MentorSchema = new Schema({
  name: {
   type: String,
-  trim: true,  
+  trim: true,
   required: true,
  },
  email: {
@@ -32,7 +32,7 @@ const MentorSchema = new Schema({
  },
  dateOfBirth:{
   type:Date,
-  required:true
+  default:'2000-12-20'
  },
  available:{
      type:Boolean,
