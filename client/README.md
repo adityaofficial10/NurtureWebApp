@@ -1,4 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The server code is stored in the server directory.
+Launch the server following setup instructions and then run npm start from your client directory.
 
 ## Available Scripts
 
