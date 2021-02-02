@@ -9,8 +9,8 @@ import * as actionTypes from "../../../../store/actions";
 import nurture from '../../../../assets/images/nurture.png';
 import Avatar from '../../../../assets/images/user/avatar.jpg';
 import { FiLogOut } from "react-icons/fi";
-import { setAuthToken } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/mentors.js';
-import { logout } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/users.js'
+import { setAuthToken } from '../../../../helpers/mentors';
+import { logout } from '../../../../helpers/users'
 
 class NavBar extends Component {
 

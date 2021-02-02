@@ -4,7 +4,7 @@ import {NavLink,Redirect} from 'react-router-dom';
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
-import { signup } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/users.js';
+import { signup } from '../../../helpers/users';
 
 class SignUpMentee extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink, Redirect} from 'react-router-dom';
 //import { login,setAuthToken } from '/Users/ravi/Desktop/final/NurtureWebApp/client1/template/src/helpers/users.js'
-import { login } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/users.js'
+import { login } from '../../../helpers/users'
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
