@@ -55,8 +55,15 @@ h1 {
 
 #schemes a,
 #fields a {
+    color: black;
     flex: 1 0;
     padding: 0 1rem;
+}
+
+#schemes a:hover,
+#fields a:hover {
+    text-decoration: none;
+    color: black;
 }
 
 @media (min-width: 768px) {
@@ -69,13 +76,3 @@ h1 {
         margin: 0 auto 2rem !important;
     }
 }
-
-
-// function getFields(opt, d) {
-//     let listOfFields = [],
-//         field = opt[1];
-//     opt.shift();
-//     console.log(d)
-//     listOfFields.push(getFields(opt, d[field]));
-//     return listOfFields;
-// }

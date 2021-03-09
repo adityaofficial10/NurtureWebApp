@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Card, CardDeck } from 'react-bootstrap';
 import { scroller } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
@@ -21,14 +22,15 @@ function getFields(opt, d) {
     let listOfFields = [],
         field = opt.shift();
     const isArr = Array.isArray(d[field]);
+    let end = false;
 
     if (isArr) {
         if (d[field]) {
             let temp = [...d[field]];
             temp.unshift(field);
-            return temp;
+            return [temp, true];
         } else {
-            return field;
+            return [field, true];
         }
     } else if (opt.length === 0) {
         let temp = [...Object.keys(d[field])];
@@ -38,15 +40,17 @@ function getFields(opt, d) {
         let temp = [...Object.keys(d[field])];
         temp.unshift(field);
         listOfFields.push(temp);
-        temp = [...getFields(opt, d[field])];
+        temp = getFields(opt, d[field]);
+        end = temp[1];
+        temp = temp[0];
         listOfFields.push(temp);
     }
-    return listOfFields;
+    return [listOfFields, end];
 }
 
 function SchemeFields({ selected, options, showFields }) {
     const selectedScheme = options[0];
-    const isArr = Array.isArray(data[selectedScheme]);
+    let isArr = Array.isArray(data[selectedScheme]);
     let fields = [];
 
     if (isArr) {
@@ -54,7 +58,9 @@ function SchemeFields({ selected, options, showFields }) {
         temp.unshift(selectedScheme);
         fields.push(temp);
     } else {
-        fields = [...getFields([...options], data)];
+        let res = getFields([...options], data);
+        fields = res[0];
+        isArr = res[1];
     }
 
     return (
@@ -66,16 +72,16 @@ function SchemeFields({ selected, options, showFields }) {
                         <div key={i} id={'level' + (i + 1)} name={f[0]} className='p-5'>
                             <CardDeck className='justify-content-around'>
                                 {f.slice(1).map((v, ind) => {
-                                    return (
-                                        <Card
-                                            key={ind}
-                                            onClick={
-                                                !isArr
-                                                    ? () => showFields(v, false, i + 1)
-                                                    : () =>
-                                                          console.log(`Route to ${options[0]}/${v}`)
-                                            }
-                                        >
+                                    return isArr && fields.length - 1 === i ? (
+                                        <Card key={ind}>
+                                            <Link to={'career-counsel/' + options[0] + '/' + v}>
+                                                <Card.Body>
+                                                    <Card.Title>{v}</Card.Title>
+                                                </Card.Body>
+                                            </Link>
+                                        </Card>
+                                    ) : (
+                                        <Card key={ind} onClick={() => showFields(v, false, i + 1)}>
                                             <Card.Body>
                                                 <Card.Title>{v}</Card.Title>
                                             </Card.Body>
