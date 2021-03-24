@@ -77,6 +77,7 @@ function SchemeFields({ selected, options, showFields }) {
                                             <Link to={'career-counsel/' + options[0] + '/' + v}>
                                                 <Card.Body>
                                                     <Card.Title>{v}</Card.Title>
+                                                    <img src="https://picsum.photos/100"></img>
                                                 </Card.Body>
                                             </Link>
                                         </Card>
@@ -84,6 +85,7 @@ function SchemeFields({ selected, options, showFields }) {
                                         <Card key={ind} onClick={() => showFields(v, false, i + 1)}>
                                             <Card.Body>
                                                 <Card.Title>{v}</Card.Title>
+                                                <img src="https://picsum.photos/100"></img>
                                             </Card.Body>
                                         </Card>
                                     );
@@ -109,6 +111,7 @@ export default function CareerCounsel() {
             <Card key={k} onClick={() => showFields(k, true, 0)}>
                 <Card.Body>
                     <Card.Title>{k}</Card.Title>
+                    <img src="https://picsum.photos/100"></img>
                 </Card.Body>
             </Card>
         );

@@ -7,6 +7,7 @@ const signupDecision = React.lazy(() => import('./Demo/Authentication/Decision/s
 const SignUpMentee = React.lazy(() => import('./Demo/Authentication/SignUp/SignUpMentee'));
 const SignUpMentor = React.lazy(() => import('./Demo/Authentication/SignUp/SignUpMentor'));
 const CareerCounsel = React.lazy(() => import('./Demo/CareerCounsel/index.jsx'))
+const CareerDescription = React.lazy(() => import('./Demo/CareerCounsel/CareerDescription.jsx'))
 
 const route = [
     { path:'/auth/login-decision',exact:true,name:'Decision-SignIn', component:loginDecision},
@@ -15,7 +16,8 @@ const route = [
     { path: '/auth/signup-decision', exact: true, name: 'Decision', component: signupDecision },
     { path: '/auth/signup-student', exact: true, name: 'SignUpMentee', component: SignUpMentee },
     { path: '/auth/signup-mentor', exact: true, name: 'SignUpMentor', component: SignUpMentor },
-    { path: '/career-counsel', exact: true, name: 'CareerCounsel', component: CareerCounsel}
+    { path: '/career-counsel', exact: true, name: 'CareerCounsel', component: CareerCounsel },
+    { path: '/career-counsel/:scheme/:field', name: 'CareerDescription', component: CareerDescription }
 ];
 
 export default route;

@@ -12,6 +12,8 @@ import { FiLogOut } from "react-icons/fi";
 import { setAuthToken } from '../../../../helpers/mentors';
 import { logout } from '../../../../helpers/users'
 
+import { Nav, Navbar } from "react-bootstrap";
+
 class NavBar extends Component {
 
     constructor(props){
@@ -60,10 +62,12 @@ class NavBar extends Component {
                         <h2 style={{color: '#f2f2f2', fontFamily:"Lucida Console"}}>Dashboard</h2>
                     </div>
                     <div rtlLayout={this.props.rtlLayout} >
-                        <span style={{color: "#ffffff"}}><b>Logout</b></span>
-                        <Link to="/auth/signin">
-                            <a href={DEMO.BLANK_LINK} onClick = {(e) => this.onLogout(e)}><FiLogOut size="25px"/></a>  
-                        </Link>
+                        <Nav>
+                        <Nav.Link href="/career-counsel" style={{color: "#ffffff"}}>CAREER COUNSEL</Nav.Link>
+                        <Nav.Link href="/auth/signin" onClick = {(e) => this.onLogout(e)}>
+                            <b>Logout</b><FiLogOut size="25px"/>
+                        </Nav.Link>
+                        </Nav>
                     </div> 
                 </header>
             </Aux>

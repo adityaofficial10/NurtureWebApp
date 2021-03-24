@@ -1,0 +1,14 @@
+#choices {
+    background-color: lightgreen;
+}
+
+.card-deck {
+    display: flex;
+}
+
+.card {
+    flex: 1 0;
+    width: 15rem;
+    height: 15rem;
+    margin: 0 2rem 2rem !important;
+}
