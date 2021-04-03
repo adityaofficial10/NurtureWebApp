@@ -1,6 +1,8 @@
 import React from 'react';
-import { Navbar, Nav, Card } from 'react-bootstrap';
+import { Navbar, Nav, Card, Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import nurture from '../../assets/images/nurture.png';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
@@ -32,8 +34,10 @@ export default function LandingPage() {
     return (
         <>
             {/* TODO: Make Navbar component */}
-            <Navbar variant='dark' bg='dark'>
-                <Navbar.Brand className='mr-auto'>NURTURE</Navbar.Brand>
+            <Navbar>
+                <Navbar.Brand className='mr-auto'>
+                    <img src={nurture} style={{ width: '50px' }} className='rounded mr-3' />
+                </Navbar.Brand>
                 <Nav>
                     <Nav.Link>About Us</Nav.Link>
                     <Nav.Link>Become a Mentor</Nav.Link>
@@ -42,20 +46,25 @@ export default function LandingPage() {
                     <Nav.Link>Contact Us</Nav.Link>
                 </Nav>
             </Navbar>
-            <div className='p-5 text-center' id='mentor-mentee'>
-                <Card id='card-mentor'>
-                    <Card.Body>
-                        <Card.Title>BECOME A MENTOR</Card.Title>
-                    </Card.Body>
-                </Card>
-                <Link to='/new-landing/become-mentee'>
-                    <Card id='card-mentee'>
-                        <Card.Body>
-                            <Card.Title>BECOME A MENTEE</Card.Title>
-                        </Card.Body>
-                    </Card>
-                </Link>
-            </div>
+            <Jumbotron>
+                <Container className='text-center'>
+                    <h1>NURTURE</h1>
+                    <div className='p-5 text-center' id='mentor-mentee'>
+                        <Card id='card-mentor'>
+                            <Card.Body>
+                                <Card.Title>BECOME A MENTOR</Card.Title>
+                            </Card.Body>
+                        </Card>
+                        <Link to='/new-landing/become-mentee'>
+                            <Card id='card-mentee'>
+                                <Card.Body>
+                                    <Card.Title>BECOME A MENTEE</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Link>
+                    </div>
+                </Container>
+            </Jumbotron>
             <div className='p-5' id='about-us'>
                 <h1 className='mb-5'>ABOUT US</h1>
                 <p>

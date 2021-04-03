@@ -1,0 +1,32 @@
+#apply-btn {
+    display: grid;
+    place-items: center;
+    height: 50vh;
+
+    h1 {
+        padding: 15px;
+        cursor: pointer;
+        border-bottom: red solid;
+    }
+
+    a {
+        color: black;
+        &:hover {
+            text-decoration: none !important;
+        }
+    }
+}
+
+#why-join {
+    background-color: lightgreen;
+}
+
+#mentee-form {
+    background-color: lightsalmon;
+
+    form {
+        margin: 0 auto;
+        // width: 75%;
+        // width: min(100vw, 75%);
+    }
+}

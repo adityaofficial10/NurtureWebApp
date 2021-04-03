@@ -9,6 +9,8 @@ const SignUpMentor = React.lazy(() => import('./Demo/Authentication/SignUp/SignU
 const CareerCounsel = React.lazy(() => import('./Demo/CareerCounsel/index.jsx'))
 const CareerDescription = React.lazy(() => import('./Demo/CareerCounsel/CareerDescription.jsx'))
 const LandingPage = React.lazy(() => import('./Demo/LandingPage/index.jsx'))
+const BecomeMentee = React.lazy(() => import('./Demo/LandingPage/BecomeMentee.jsx'));
+const LandingMentee = React.lazy(() => import('./Demo/LandingPage/LandingMentee.jsx'));
 
 const route = [
     { path:'/auth/login-decision',exact:true,name:'Decision-SignIn', component:loginDecision},
@@ -19,7 +21,9 @@ const route = [
     { path: '/auth/signup-mentor', exact: true, name: 'SignUpMentor', component: SignUpMentor },
     { path: '/career-counsel', exact: true, name: 'CareerCounsel', component: CareerCounsel },
     { path: '/career-counsel/:scheme/:field', name: 'CareerDescription', component: CareerDescription },
-    { path: '/new-landing', exact: true, name: 'LandingPage', component: LandingPage }
+    { path: '/new-landing', exact: true, name: 'LandingPage', component: LandingPage },
+    { path: '/new-landing/become-mentee', exact: true, name: 'BecomeMentee', component: BecomeMentee },
+    { path: '/new-landing/mentee-landing', exact: true, name: 'LandingMentee', component: LandingMentee }
 ];
 
 export default route;
