@@ -1,0 +1,99 @@
+.navbar {
+    background-color: #ffe8c2;
+    font-size: 18px;
+    color: black;
+
+    .nav-link {
+        color: black !important;
+
+        &:hover {
+            background-color: lightseagreen;
+            border-radius: 10px;
+        }
+    }
+}
+
+.jumbotron {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+#mentor-mentee {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    column-gap: 25px;
+    row-gap: 25px;
+    justify-content: space-evenly;
+
+    .card:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+
+    .card-body {
+        display: grid;
+        place-items: center;
+    }
+
+    .card-title {
+        font-size: 2rem;
+    }
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: all 300ms ease-in-out;
+    height: 250px;
+    width: 250px;
+}
+
+#about-us {
+    background-color: lightgreen;
+}
+
+#testimonials {
+    background-color: lightsalmon;
+}
+
+#testimonial-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    column-gap: 25px;
+    row-gap: 25px;
+    justify-content: space-evenly;
+
+    .card {
+        height: unset;
+    }
+
+    .card-body {
+        display: grid;
+        grid-template-rows: 1fr 3fr;
+        place-items: center;
+    }
+
+    .card-title {
+        font-size: 2rem;
+    }
+
+    .card-text {
+        font-size: 18px;
+    }
+}
+
+#contact-us {
+    background-color: lightskyblue;
+}

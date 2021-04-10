@@ -13,7 +13,7 @@ import { AiFillClockCircle }  from "react-icons/ai";
 import Popup from 'reactjs-popup';
 import Calendar from 'react-calendar';
 import DateTimePicker from 'react-datetime-picker';
-import { getSlotsOfMentors,bookSlot,getUserDashboard } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/users.js'
+import { getSlotsOfMentors,bookSlot,getUserDashboard } from '../../helpers/users'
 import { Redirect } from 'react-router-dom';
 
 

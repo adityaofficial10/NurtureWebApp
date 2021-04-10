@@ -8,7 +8,7 @@ import { FiFileText, FiPhone } from "react-icons/fi";
 import { AiOutlineMail }  from "react-icons/ai";
 
 import DateTimePicker from 'react-datetime-picker';
-import { getMentorDetails,getMentorDashboard,putSlot } from '/Users/ravi/Desktop/final/NurtureWebApp/client/template/src/helpers/mentors.js';
+import { getMentorDetails,getMentorDashboard,putSlot } from '../../helpers/mentors';
 import { Redirect } from 'react-router-dom';
 
 class Mentee extends React.Component {
