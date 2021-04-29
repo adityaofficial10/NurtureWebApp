@@ -1,36 +1,15 @@
 import React from 'react';
 import { Navbar, Nav, Card, Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Testimonials from "./Testimonials";
+import Footer from "./Footer";
 
 import nurture from '../../assets/images/nurture.png';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
 
-let testimonialList = [
-    [
-        'Google',
-        'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
-    ],
-    [
-        'Apple',
-        'Nam dictum tincidunt tincidunt. Nullam commodo nibh semper faucibus lobortis. Phasellus molestie ipsum sed turpis vulputate iaculis. Vestibulum ut mattis nunc, vel maximus diam. Nulla.',
-    ],
-    ['UN', 'Hello there'],
-];
-
 export default function LandingPage() {
-    let testimonialCards = [];
-    for (let v of testimonialList) {
-        testimonialCards.push(
-            <Card>
-                <Card.Body>
-                    <Card.Title>{v[0]}</Card.Title>
-                    <Card.Text>{v[1]}</Card.Text>
-                </Card.Body>
-            </Card>
-        );
-    }
     return (
         <>
             {/* TODO: Make Navbar component */}
@@ -40,9 +19,9 @@ export default function LandingPage() {
                 </Navbar.Brand>
                 <Nav>
                     <Nav.Link>About Us</Nav.Link>
-                    <Nav.Link>Become a Mentor</Nav.Link>
-                    <Nav.Link>Become a Mentee</Nav.Link>
-                    <Nav.Link>Donate</Nav.Link>
+                    {/* <Nav.Link>Become a Mentor</Nav.Link> */}
+                    {/* <Nav.Link>Become a Mentee</Nav.Link> */}
+                    {/* <Nav.Link>Donate</Nav.Link> */}
                     <Nav.Link>Contact Us</Nav.Link>
                 </Nav>
             </Navbar>
@@ -78,11 +57,9 @@ export default function LandingPage() {
             </div>
             <div className='p-5 text-center' id='testimonials'>
                 <h1 className='mb-5'>Testimonials</h1>
-                <div id='testimonial-cards'>{testimonialCards}</div>
+                <Testimonials />
             </div>
-            <div className='p-5' id='contact-us'>
-                <h1 className='mb-5'>Contact Us</h1>
-            </div>
+            <Footer />
         </>
     );
 }
