@@ -67,39 +67,3 @@ a:hover {
 #testimonials {
     background-color: lightsalmon;
 }
-
-#footer {
-    background-color: black;
-    color: white;
-
-    .footer-box {
-        margin-top: 30px;
-    }
-
-    .footer-header {
-        margin-bottom: 30px;
-    }
-
-    .footer-body {
-        p {
-            margin: 0;
-        }
-
-        .footer-social {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-
-            li {
-                display: inline-block;
-                margin: 5px;
-                border-radius: 50%;
-                border-color: white;
-                border-style: solid;
-                width: 40px;
-                height: 40px;
-                text-align: center;
-            }
-        }
-    }
-}
