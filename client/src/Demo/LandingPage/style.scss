@@ -68,36 +68,6 @@ a:hover {
     background-color: lightsalmon;
 }
 
-#testimonial-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 250px);
-    column-gap: 25px;
-    row-gap: 25px;
-    justify-content: space-evenly;
-
-    .card {
-        height: unset;
-    }
-
-    .card-body {
-        display: grid;
-        grid-template-rows: 1fr 3fr;
-        place-items: center;
-    }
-
-    .card-title {
-        font-size: 2rem;
-    }
-
-    .card-text {
-        font-size: 18px;
-    }
-}
-
-#contact-us {
-    background-color: lightskyblue;
-}
-
 #footer {
     background-color: black;
     color: white;

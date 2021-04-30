@@ -55,8 +55,8 @@ export default function LandingPage() {
                     culpa qui officia deserunt mollit anim id est laborum.
                 </p>
             </div>
-            <div className='p-5 text-center' id='testimonials'>
-                <h1 className='mb-5'>Testimonials</h1>
+            <div className='p-5' id='testimonials'>
+                <h1 className='mb-5 text-center'>Testimonials</h1>
                 <Testimonials />
             </div>
             <Footer />
