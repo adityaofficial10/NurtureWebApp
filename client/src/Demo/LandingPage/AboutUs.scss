@@ -1,0 +1,25 @@
+#about-us {
+    #about-us-content {
+        background-color: green;
+        color: white;
+
+        @media screen and (min-width: 768px) {
+            box-shadow: 15px 15px 0px 0px lightgreen;
+            border-radius: 15px;
+        }
+    }
+
+    #about-us-img {
+        // background-color: red;
+        // background-image: url(https://static.wixstatic.com/media/f2a190_f1f12c856e7f4492871b0669f395a000~mv2.jpg/v1/fill/w_613,h_600,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01/f2a190_f1f12c856e7f4492871b0669f395a000~mv2.webp);
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        // background-position: center;
+        // height: 250px;
+        img {
+            min-height: 100%;
+            height: auto;
+            width: 100%;
+        }
+    }
+}
