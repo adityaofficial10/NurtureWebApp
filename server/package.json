@@ -1,10 +1,12 @@
 {
-  "name": "sampla",
+  "name": "nurture_mentorship_platform",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon --exec 'mocha test/*/**.test.js'",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test-unit": "nodemon --exec 'mocha tests/*/**.test.js'",
+    "test": "npm run pretest && npm run test-unit",
     "server": "nodemon server"
   },
   "author": "",
@@ -28,5 +30,9 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.16"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-strongloop": "^2.1.0"
   }
 }
