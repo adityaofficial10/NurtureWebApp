@@ -23,14 +23,16 @@ const impacts = [
 export default function OurImpact() {
     return (
         // TODO:
-        // [] - Add in animations
+        // [x] - Add in animations
         // [x] - Make it more pro
         <div className='p-5' id='our-impact'>
             <div className='container-fluid'>
-                <h1 className='text-center my-5'>OUR IMPACT</h1>
+                <h1 className='text-center my-5 wow fadeInUp'>
+                    OUR IMPACT
+                </h1>
                 <div className='row'>
                     {impacts.map((impact, i) => (
-                        <div className='col-md-4 d-md-flex align-items-stretch' key={i}>
+                        <div className='col-md-4 d-md-flex align-items-stretch wow fadeInUp' key={i}>
                         {/* <div className='col-lg-4 d-lg-flex align-items-stretch' key={i}> */}
                             <div className='card card-blog'>
                                 <div className='card-image'>
