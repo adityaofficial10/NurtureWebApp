@@ -14,6 +14,7 @@ const admins = require('./routes/admins');
 const events = require('./routes/events');
 const requests = require('./routes/requests');
 const slots = require('./routes/slots');
+const profiles = require('./routes/profiles');
 const userModel = require('./app/api/models/Users');
 const mentorModel = require('./app/api/models/mentors');
 const bodyParser = require('body-parser');
@@ -52,12 +53,10 @@ app.get('/', function(req, res){
   res.json({description: 'This is a web app developed for Nurture...'});
 });
 // public route
-app.get('/hello', function(req, res){
-  res.send('Hello World!');
-});
 app.use('/users', users);
 app.use('/mentors', mentors);
 app.use('/admins', admins);
+app.use('/profiles', profiles);
 // private route
 app.use('/events', validateUser, events);
 app.use('/requests', validateUser, requests);
