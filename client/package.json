@@ -37,7 +37,8 @@
     "react-table-scrollbar": "^0.1.9",
     "react-window-size": "^1.2.2",
     "reactjs-popup": "^2.0.4",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
