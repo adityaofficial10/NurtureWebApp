@@ -38,7 +38,7 @@ export async function signup(data){
 export async function fetchMentors(){
    
     const mentors = await instance.get('/mentors/getAll');
-    return mentors.data;
+    return mentors.data.data;
 };
 
 export async function putSlot(date,startTime,endTime){
