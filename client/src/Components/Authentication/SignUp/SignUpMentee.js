@@ -90,5 +90,4 @@ class SignUpMentee extends React.Component {
         return <Redirect to="/auth/signin"></Redirect>;
     }
 }
-
 export default SignUpMentee;

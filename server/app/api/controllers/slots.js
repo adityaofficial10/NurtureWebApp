@@ -1,15 +1,8 @@
+'use strict';
 const slotModel = require('../models/slots');
 const mentorModel = require('../models/mentors');
-const {
-  getTimeFromInput
-} = require('../helpers/utility');
-const {
-  convertTimeToStandard,
-  compareTime
-} = require('../helpers/util');
-const {
-  login
-} = require('./mentors');
+
+const { convertTimeToStandard, compareTime } = require('../helpers/util');
 
 module.exports = {
   getById: function(req, res, next) {
@@ -18,11 +11,11 @@ module.exports = {
         next(err);
       } else {
         res.json({
-          status: "success",
-          message: "Slot found!!!",
+          status: 'success',
+          message: 'Slot found!!!',
           data: {
-            slot: slotInfo
-          }
+            slot: slotInfo,
+          },
         });
       }
     });
@@ -32,7 +25,7 @@ module.exports = {
     let slotsList = [];
     let today = new Date();
     slotModel.find({
-      available: true
+      available: true,
     }).then(
       (err) => next(err),
       (slots) => {
@@ -43,59 +36,44 @@ module.exports = {
             slotsList.push({
               id: slot._id,
               mentor: slot.mentor,
-              startTime: convertTimeToStandard(slot.startTime)
+              startTime: convertTimeToStandard(slot.startTime),
             });
         }
-      }
+      },
     ).catch((err) => {
       console.error(err);
     }).finally(() => {
       if (slotsList.length)
         res.json({
           code: 1,
-          status: "success",
-          message: "Slots list found!!!",
+          status: 'success',
+          message: 'Slots list found!!!',
           data: {
-            slots: slotsList
-          }
+            slots: slotsList,
+          },
         });
       else
         res.json({
           code: 0,
-          status: "failure",
-          message: "There are currently no slots available.",
-          data: null
+          status: 'failure',
+          message: 'There are currently no slots available.',
+          data: null,
         });
     });
-    /*, function(err, slots){
-       if (err){
-        next(err);
-       } else{
-        for (let slot of slots) {
-          console.log(slot);
-         if(compareTime(today,slot.date))
-         slotsList.push({id: slot._id, mentor: slot.mentor, startTime:convertTimeToStandard(slot.startTime)});
-        }
-        if(slotsList.length)
-        res.json({code:1,status:"success", message: "Slots list found!!!", data:{slots: slotsList}});
-        else
-        res.json({code:0,status:"failure", message: "There are currently no slots available.", data:null});
-
-      }*/
   },
   updateById: function(req, res, next) {
     slotModel.findByIdAndUpdate(req.params.slotId, {
       startTime: req.body.startTime,
       endTime: req.body.endTime,
-      date: req.body.date
+      date: req.body.date,
     }, function(err, slotInfo) {
       if (err)
         next(err);
       else {
         res.json({
-          status: "success",
-          message: "Slot updated successfully!!!",
-          data: slotInfo
+          status: 'success',
+          message: 'Slot updated successfully!!!',
+          data: slotInfo,
         });
       }
     });
@@ -106,9 +84,9 @@ module.exports = {
         next(err);
       else {
         res.json({
-          status: "success",
-          message: "Slot deleted successfully!!!",
-          data: slotInfo
+          status: 'success',
+          message: 'Slot deleted successfully!!!',
+          data: slotInfo,
         });
       }
     });
@@ -121,15 +99,15 @@ module.exports = {
         mentorName: req.body.mentorName,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
-        date: req.body.date
+        date: req.body.date,
       }, function(err, result) {
         if (err)
           next(err);
         else {
           res.json({
-            status: "success",
-            message: "Slot added successfully!!!",
-            data: result
+            status: 'success',
+            message: 'Slot added successfully!!!',
+            data: result,
           });
         }
       });
@@ -143,38 +121,37 @@ module.exports = {
     let rawSlots = [];
     let today = new Date();
     slotModel.find({
-      available: true
+      available: true,
     }, function(err, slots) {
       if (err) {
         next(err);
       } else {
         console.log(slots);
         for (let slot of slots) {
-          if (compareTime(today, slot.date))
-            {
-              slotsList.push({
-                mentor: slot.mentorName,
-                startTime: convertTimeToStandard(slot.startTime)
-              });
-              rawSlots.push(slot);
-            }
+          if (compareTime(today, slot.date)) {
+            slotsList.push({
+              mentor: slot.mentorName,
+              startTime: convertTimeToStandard(slot.startTime),
+            });
+            rawSlots.push(slot);
+          }
         }
         if (slotsList.length)
           res.json({
             code: 1,
-            status: "success",
-            message: "Slots list found!!!",
+            status: 'success',
+            message: 'Slots list found!!!',
             data: {
-              slotsList:slotsList,
-              rawSlots:rawSlots
-            }
+              slotsList: slotsList,
+              rawSlots: rawSlots,
+            },
           });
         else
           res.json({
             code: 0,
-            status: "failure",
-            message: "There are currently no slots available.",
-            data: null
+            status: 'failure',
+            message: 'There are currently no slots available.',
+            data: null,
           });
       }
     });

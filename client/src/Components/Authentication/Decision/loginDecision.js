@@ -24,6 +24,9 @@ class loginDecision extends React.Component {
                                 <Link to="/auth/student-signin">
                                     <button className="btn btn-primary shadow-2 mb-4">Mentee</button>
                                 </Link>
+                                <Link to="/auth/admin-signin">
+                                    <button className="btn btn-primary shadow-2 mb-4">Admin</button>
+                                </Link>
                             </div>
                         </div>
                     </div>

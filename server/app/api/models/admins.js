@@ -6,7 +6,7 @@ const saltRounds = 10;
 
 const Schema = mongoose.Schema;
 
-const MentorSchema = new Schema({
+const AdminSchema = new Schema({
   name: {
     type: String,
     trim: true,
@@ -31,20 +31,12 @@ const MentorSchema = new Schema({
     trim: true,
     required: true,
   },
-  dateOfBirth: {
-    type: Date,
-    default: '2000-12-20',
-  },
-  available: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 // hash user password before saving into database
-MentorSchema.pre('save', function(next){
+AdminSchema.pre('save', function(next){
   this.password = bcrypt.hashSync(this.password, saltRounds);
   next();
 });
 
-module.exports = mongoose.model('Mentor', MentorSchema);
+module.exports = mongoose.model('Admin', AdminSchema);

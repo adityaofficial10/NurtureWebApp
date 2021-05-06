@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import menteeImg from '../../assets/images/mentee.png';
 import menteeSvg from '../../assets/images/mentee.svg';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './BecomeMentee.scss';
 
@@ -22,7 +23,6 @@ export default function BecomeMentee() {
         const fData = new FormData(e.currentTarget);
         fData.forEach((v, k) => console.log(k, v));
     }
-
     return (
         <>
             <Navbar variant='dark' bg='dark'>

@@ -1,13 +1,13 @@
 import React from 'react';
 import {NavLink, Redirect} from 'react-router-dom';
 //import { login,setAuthToken } from '/Users/ravi/Desktop/final/NurtureWebApp/client1/template/src/helpers/users.js'
-import { login } from '../../../helpers/users'
+import { login } from '../../../helpers/admins'
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
-class studentSignIn extends React.Component {
+class adminSignIn extends React.Component {
 
     constructor() {
         super();
@@ -26,11 +26,11 @@ class studentSignIn extends React.Component {
     };
     onSubmit = e => {
         e.preventDefault();
-        const userData = {
+        const adminData = {
           email: this.state.email,
           password: this.state.password
         };
-        login(userData.email,userData.password).then((response)=>{
+        login(adminData.email,adminData.password).then((response)=>{
             if(response.code){
                 console.log("Success");
                 this.setState({ redirect:true }); 
@@ -59,7 +59,7 @@ class studentSignIn extends React.Component {
                                     <i className="feather icon-unlock auth-icon"/>
                                 </div>
                                 <form noValidate onSubmit={this.onSubmit}>
-                                <h3 className="mb-4">Student Dashboard</h3>
+                                <h3 className="mb-4">Admin Dashboard</h3>
                                 <h4 className="mb-4">Login</h4>
                                 <br></br>
                                 <p>{msg}</p>
@@ -71,7 +71,6 @@ class studentSignIn extends React.Component {
                                 </div>
                                 <button type="submit" className="btn btn-primary shadow-2 mb-4">Login</button>
                                 </form>
-                                <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-decision">Signup</NavLink></p>
                             </div>
                         </div>
                     </div>
@@ -79,7 +78,8 @@ class studentSignIn extends React.Component {
             </Aux>
         );
         else
-        return <Redirect to="/dashboard/mentee"></Redirect>;
+        return <Redirect to="/dashboard/admin"></Redirect>;
     }
 }
-export default studentSignIn;
+
+export default adminSignIn;
