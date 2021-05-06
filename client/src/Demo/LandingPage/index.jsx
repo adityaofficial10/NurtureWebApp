@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar, Nav, Card, Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Testimonials from "./Testimonials";
-import Footer from "./Footer";
+import { WOW } from 'wowjs';
+import Testimonials from './Testimonials';
+import Footer from './Footer';
+import AboutUs from './AboutUs';
+import OurImpact from './OurImpact';
 
 import nurture from '../../assets/images/nurture.png';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
 
+
 export default function LandingPage() {
+    useEffect(() => {
+        new WOW({ live: false }).init();
+    });
     return (
         <>
             {/* TODO: Make Navbar component */}
@@ -44,19 +51,10 @@ export default function LandingPage() {
                     </div>
                 </Container>
             </Jumbotron>
-            <div className='p-5' id='about-us'>
-                <h1 className='mb-5'>ABOUT US</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-            </div>
+            <AboutUs />
+            <OurImpact />
             <div className='p-5' id='testimonials'>
-                <h1 className='mb-5 text-center'>Testimonials</h1>
+                <h1 className='mb-5 text-center wow fadeInUp'>Testimonials</h1>
                 <Testimonials />
             </div>
             <Footer />
