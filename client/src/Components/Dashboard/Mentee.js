@@ -345,5 +345,4 @@ class Mentee extends React.Component {
             return <Redirect to='/auth/student-signin'></Redirect>;
     }
 }
-
 export default Mentee;

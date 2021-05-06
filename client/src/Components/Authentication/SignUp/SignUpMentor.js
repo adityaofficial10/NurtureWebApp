@@ -92,5 +92,4 @@ class SignUpMentor extends React.Component {
 
     }
 }
-
 export default SignUpMentor;
