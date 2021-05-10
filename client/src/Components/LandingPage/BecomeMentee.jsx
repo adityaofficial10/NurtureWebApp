@@ -8,21 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './BecomeMentee.scss';
 
 export default function BecomeMentee() {
-    const [values, setValues] = useState({});
-
-    const changeForm = e => {
-        setValues({ ...values, [e.target.id]: e.target.value });
-        e.target.focus();
-        console.log(values);
-    };
-
-    function formSubmit(e) {
-        e.preventDefault();
-        console.log(e.currentTarget);
-        const fData = new FormData(e.currentTarget);
-        fData.forEach((v, k) => console.log(k, v));
-    }
-
     return (
         <>
             <Navbar variant='dark' bg='dark'>
@@ -69,100 +54,6 @@ export default function BecomeMentee() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id='mentee-form' className='container-fluid p-5'>
-                <form onSubmit={formSubmit}>
-                    <div className='row mb-3'>
-                        <div
-                            className={
-                                'mx-auto input col-md-6 input--jiro ' +
-                                (values?.fname ? 'input--filled' : '')
-                            }
-                        >
-                            <input
-                                className='input__field input__field--jiro'
-                                type='text'
-                                id='fname'
-                                name='fname'
-                                onChange={changeForm}
-                            />
-                            <label className='input__label input__label--jiro' htmlFor='fname'>
-                                <span className='input__label-content input__label-content--jiro'>
-                                    First Name
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='row mb-3'>
-                        <div
-                            className={
-                                'mx-auto input col-md-6 input--jiro ' +
-                                (values?.lname ? 'input--filled' : '')
-                            }
-                        >
-                            <input
-                                className='input__field input__field--jiro'
-                                type='text'
-                                id='lname'
-                                name='lname'
-                                onChange={changeForm}
-                            />
-                            <label className='input__label input__label--jiro' htmlFor='lname'>
-                                <span className='input__label-content input__label-content--jiro'>
-                                    Last Name
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='row mb-3'>
-                        <div
-                            className={
-                                'mx-auto input col-md-6 input--jiro ' +
-                                (values?.email ? 'input--filled' : '')
-                            }
-                        >
-                            <input
-                                className='input__field input__field--jiro'
-                                type='email'
-                                id='email'
-                                name='email'
-                                onChange={changeForm}
-                            />
-                            <label className='input__label input__label--jiro' htmlFor='email'>
-                                <span className='input__label-content input__label-content--jiro'>
-                                    Email
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='row mb-3'>
-                        <div
-                            className={
-                                'mx-auto input col-md-6 input--jiro ' +
-                                (values?.phone ? 'input--filled' : '')
-                            }
-                        >
-                            <input
-                                className='input__field input__field--jiro'
-                                type='tel'
-                                id='phone'
-                                name='phone'
-                                onChange={changeForm}
-                            />
-                            <label className='input__label input__label--jiro' htmlFor='phone'>
-                                <span className='input__label-content input__label-content--jiro'>
-                                    Phone Number
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class='row'>
-                        
-                        <Button variant='primary' type='submit' className='mt-4 mx-auto'>
-                            REGISTER
-                        </Button>
-                    </div>
-                </form>
             </div>
         </>
     );
