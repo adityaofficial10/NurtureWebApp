@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Card, Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { WOW } from 'wowjs';
+import { scroller } from 'react-scroll';
+
 import Testimonials from './Testimonials';
 import Footer from './Footer';
 import AboutUs from './AboutUs';
@@ -12,8 +14,20 @@ import nurture from '../../assets/images/nurture.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
 
-
 export default function LandingPage() {
+    const [pos, setPos] = useState('top');
+
+    useEffect(() => {
+        document.addEventListener('scroll', e => {
+            const scrolled = document.scrollingElement.scrollTop;
+            if (scrolled >= 20) {
+                setPos('moved');
+            } else {
+                setPos('top');
+            }
+        });
+    });
+
     useEffect(() => {
         new WOW({ live: false }).init();
     });
@@ -21,7 +35,10 @@ export default function LandingPage() {
     return (
         <>
             {/* TODO: Make Navbar component */}
-            <Navbar>
+            <Navbar
+                fixed='top'
+                style={{ backgroundColor: pos === 'top' ? 'transparent' : 'white' }}
+            >
                 <Navbar.Brand className='mr-auto'>
                     <img src={nurture} style={{ width: '50px' }} className='rounded mr-3' />
                 </Navbar.Brand>
@@ -34,9 +51,9 @@ export default function LandingPage() {
                 </Nav>
             </Navbar>
             <Jumbotron>
-                <Container className='text-center'>
-                    <h1>NURTURE</h1>
-                    <div className='p-5 text-center' id='mentor-mentee'>
+                <Container className='text-center flex-grow-1'>
+                    <h1 class='align-middle'>NURTURE</h1>
+                    {/* <div className='p-5 text-center' id='mentor-mentee'>
                         <Card id='card-mentor'>
                             <Card.Body>
                                 <Card.Title>BECOME A MENTOR</Card.Title>
@@ -49,7 +66,16 @@ export default function LandingPage() {
                                 </Card.Body>
                             </Card>
                         </Link>
-                    </div>
+                    </div> */}
+                    <a
+                        id='scroll-arrow'
+                        href='#about-us'
+                        onClick={() =>
+                            scroller.scrollTo('about-us', { smooth: 'easeInQuad', offset: -76 })
+                        }
+                    >
+                        <span></span>Scroll
+                    </a>
                 </Container>
             </Jumbotron>
             <AboutUs />

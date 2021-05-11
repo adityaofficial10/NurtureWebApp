@@ -1,10 +1,21 @@
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
 .navbar {
-    background-color: #ffe8c2;
     font-size: 18px;
     color: black;
+    text-transform: uppercase;
 
     .nav-link {
-        color: black !important;
+        color: #85b659 !important;
+        font-weight: 700;
+        // color: black !important;
 
         &:hover {
             background-color: lightseagreen;
@@ -19,15 +30,57 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
+    background: url(https://static.wixstatic.com/media/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.jpg/v1/fill/w_980,h_980,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.webp)
+        center center / cover no-repeat;
+    border-radius: 0;
 
-a {
-    color: black;
-}
+    h1 {
+        position: absolute;
+        color: #85b659;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 700;
+    }
 
-a:hover {
-    text-decoration: none;
-    color: black;
+    #scroll-arrow {
+        color: white;
+        font-weight: bold;
+        padding-top: 60px;
+        position: absolute;
+        bottom: 20px;
+        display: inline-block;
+        transform: translate(-50%);
+        letter-spacing: 0.1em;
+
+        span {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin-left: -12px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            // -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            // -webkit-animation: sdb04 2s infinite;
+            animation: sdb04 2s infinite;
+            box-sizing: border-box;
+        }
+    }
+
+    @keyframes sdb04 {
+        0% {
+            transform: rotate(-45deg) translate(0, 0);
+        }
+        20% {
+            transform: rotate(-45deg) translate(-10px, 10px);
+        }
+        40% {
+            transform: rotate(-45deg) translate(0, 0);
+        }
+    }
 }
 
 #mentor-mentee {
