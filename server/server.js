@@ -6,6 +6,7 @@ require('dotenv').config({
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 const requestsForMentors = require('./routes/requestForMentors');
 const requestsForUsers = require('./routes/requestForUsers');
 const users = require('./routes/Users');
@@ -17,17 +18,53 @@ const slots = require('./routes/slots');
 const profiles = require('./routes/profiles');
 const userModel = require('./app/api/models/Users');
 const mentorModel = require('./app/api/models/mentors');
+const Image = require('./app/api/models/images');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const mongoose = require('./config/database'); // database configuration
+const { connection } = require('./config/database');
+// database configuration
 var jwt = require('jsonwebtoken');
 
 const app = express();
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 
+const path = require('path');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const crypto = require('crypto');
+const { mongoURI } = require('./config/database');
+
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err)
+          return reject(err);
+        const fileName = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          fileName: fileName,
+          bucketName: 'uploads',
+        };
+        resolve(fileInfo);
+      });
+    });
+  },
+});
+
+const upload = multer({ storage });
+
 // connection to mongodb
-mongoose.connection.on('error',
+connection.on('error',
   console.error.bind(console, 'MongoDB connection error:'));
+
+// eslint-disable-next-line no-unused-vars
+let gfs;
+connection.once('open', () => {
+  gfs = new mongoose.mongo.GridFSBucket(connection.db, {
+    bucketName: 'uploads',
+  });
+});
 
 var corsOptions = {
   origin: 'http://localhost:3000',
@@ -37,7 +74,7 @@ var corsOptions = {
 
 app.use(cookieParser());
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.header(
     'Access-Control-Allow-Headers',
@@ -66,6 +103,24 @@ app.use('/slots', validateMentor, slots);
 app.get('/favicon.ico', function(req, res) {
   res.sendStatus(204);
 });
+
+// Route for uploading a single file
+app.post('/upload/single', upload.single('file'), (req, res, next) => {
+  console.log(req.file);
+  let newImage = new Image({
+    caption: req.body.caption,
+    filename: req.body.filename,
+    fileId: req.file.id,
+  });
+  newImage.save().then((image) => {
+    res.json({status: 200, message: 'File uploaded successfully', data: image});
+  }).catch((err) => {
+    console.log(err);
+    res.json({status: 500, message: err});
+  });
+});
+
+
 function validateUser(req, res, next) {
 
   jwt.verify(req.cookies.token, req.app.get('secretKey'),
