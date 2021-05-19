@@ -20,7 +20,7 @@ export default function LandingPage() {
     useEffect(() => {
         document.addEventListener('scroll', e => {
             const scrolled = document.scrollingElement.scrollTop;
-            if (scrolled >= 20) {
+            if (scrolled >= 50) {
                 setPos('moved');
             } else {
                 setPos('top');
@@ -52,21 +52,7 @@ export default function LandingPage() {
             </Navbar>
             <Jumbotron>
                 <Container className='text-center flex-grow-1'>
-                    <h1 class='align-middle'>NURTURE</h1>
-                    {/* <div className='p-5 text-center' id='mentor-mentee'>
-                        <Card id='card-mentor'>
-                            <Card.Body>
-                                <Card.Title>BECOME A MENTOR</Card.Title>
-                            </Card.Body>
-                        </Card>
-                        <Link to='/new-landing/become-mentee'>
-                            <Card id='card-mentee'>
-                                <Card.Body>
-                                    <Card.Title>BECOME A MENTEE</Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Link>
-                    </div> */}
+                    <h1 className='align-middle'>NURTURE</h1>
                     <a
                         id='scroll-arrow'
                         href='#about-us'
@@ -80,6 +66,20 @@ export default function LandingPage() {
             </Jumbotron>
             <AboutUs />
             <OurImpact />
+            <div className='p-5 text-center wow fadeInUp bg-primary' id='mentor-mentee'>
+                <Card id='card-mentor'>
+                    <Card.Body>
+                        <Card.Title>BECOME A MENTOR</Card.Title>
+                    </Card.Body>
+                </Card>
+                <Link to='/new-landing/become-mentee'>
+                    <Card id='card-mentee'>
+                        <Card.Body>
+                            <Card.Title>BECOME A MENTEE</Card.Title>
+                        </Card.Body>
+                    </Card>
+                </Link>
+            </div>
             <div className='p-5' id='testimonials'>
                 <h1 className='mb-5 text-center wow fadeInUp'>Testimonials</h1>
                 <Testimonials />

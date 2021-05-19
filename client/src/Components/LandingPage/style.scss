@@ -8,12 +8,12 @@ a:hover {
 }
 
 .navbar {
-    font-size: 18px;
+    // font-size: 16px;
     color: black;
     text-transform: uppercase;
 
     .nav-link {
-        color: #85b659 !important;
+        color: black !important;
         font-weight: 700;
         // color: black !important;
 
@@ -30,17 +30,23 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: url(https://static.wixstatic.com/media/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.jpg/v1/fill/w_980,h_980,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.webp)
-        center center / cover no-repeat;
+    background-image: url(https://static.wixstatic.com/media/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.jpg/v1/fill/w_980,h_980,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01/nsplsh_34324c4c47502d51506a34~mv2_d_2640_3960_s_4_2.webp);
+    background-position: center center;
+    background-size: cover;
+    // -webkit-background-size: cover;
+    background-repeat: no-repeat;
+    // background-attachment: fixed;
     border-radius: 0;
 
     h1 {
         position: absolute;
-        color: #85b659;
+        // color: #85b659;
+        color: black;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-weight: 700;
+        font-weight: 350;
+        font-size: 5rem;
     }
 
     #scroll-arrow {
