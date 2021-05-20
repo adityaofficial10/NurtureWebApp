@@ -13,15 +13,11 @@ const users = require('./routes/Users');
 const mentors = require('./routes/mentors');
 const admins = require('./routes/admins');
 const events = require('./routes/events');
-const requests = require('./routes/requests');
 const slots = require('./routes/slots');
 const profiles = require('./routes/profiles');
-const userModel = require('./app/api/models/Users');
-const mentorModel = require('./app/api/models/mentors');
-const Image = require('./app/api/models/images');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { connection } = require('./config/database');
+const { createMongoConnection, imageModel } = require('./config/database');
 // database configuration
 var jwt = require('jsonwebtoken');
 
@@ -53,18 +49,10 @@ const storage = new GridFsStorage({
 });
 
 const upload = multer({ storage });
-
-// connection to mongodb
-connection.on('error',
-  console.error.bind(console, 'MongoDB connection error:'));
-
 // eslint-disable-next-line no-unused-vars
 let gfs;
-connection.once('open', () => {
-  gfs = new mongoose.mongo.GridFSBucket(connection.db, {
-    bucketName: 'uploads',
-  });
-});
+// connection to mongodb
+
 
 var corsOptions = {
   origin: 'http://localhost:3000',
@@ -96,7 +84,6 @@ app.use('/admins', admins);
 app.use('/profiles', profiles);
 // private route
 app.use('/events', validateUser, events);
-app.use('/requests', validateUser, requests);
 app.use('/request', validateMentor, requestsForMentors);
 app.use('/userDashboard', validateUser, requestsForUsers);
 app.use('/slots', validateMentor, slots);
@@ -107,7 +94,7 @@ app.get('/favicon.ico', function(req, res) {
 // Route for uploading a single file
 app.post('/upload/single', upload.single('file'), (req, res, next) => {
   console.log(req.file);
-  let newImage = new Image({
+  let newImage = new imageModel({
     caption: req.body.caption,
     filename: req.body.filename,
     fileId: req.file.id,
@@ -120,6 +107,10 @@ app.post('/upload/single', upload.single('file'), (req, res, next) => {
   });
 });
 
+// Route for uploading multiple files
+app.post('/upload/multiple', upload.array('file', 5), (req, res, next) => {
+  res.json({status: 200, message: 'Files uploaded successfully...'});
+});
 
 function validateUser(req, res, next) {
 
@@ -184,7 +175,36 @@ app.use(function(err, req, res, next) {
     res.status(500).json({message: 'Something looks wrong :( !!!'});
 });
 
-var port = process.env.PORT;
-app.listen(port, function(){
-  console.log(`Server running on port ${port}...`);
+console.log('=> Connecting to MongoDB Atlas...');
+createMongoConnection(mongoURI).then((connection) => {
+  global.userModel
+  = connection.model('User', require('./app/api/models/Users'));
+  global.mentorModel
+  = connection.model('Mentor', require('./app/api/models/mentors'));
+  global.adminModel
+  = connection.model('Admin', require('./app/api/models/admins'));
+  global.eventModel
+  = connection.model('Event', require('./app/api/models/events'));
+  global.slotModel
+  = connection.model('Slot', require('./app/api/models/slots'));
+  global.imageModel
+  = connection.model('Image', require('./app/api/models/images'));
+
+  console.log('=> MongoDB Database connected...');
+  connection.on('error',
+    console.error.bind(console, 'MongoDB connection error:'));
+
+  // eslint-disable-next-line no-unused-vars
+  connection.once('open', () => {
+    gfs = new mongoose.mongo.GridFSBucket(connection.db, {
+      bucketName: 'uploads',
+    });
+  });
+
+  var port = process.env.PORT;
+  app.listen(port, function(){
+    console.log(`=> Server running on port ${port}...`);
+  });
+}).catch((err) => {
+  console.log(err);
 });
