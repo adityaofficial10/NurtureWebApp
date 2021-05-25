@@ -67,11 +67,13 @@ export default function LandingPage() {
             <AboutUs />
             <OurImpact />
             <div className='p-5 text-center wow fadeInUp bg-primary' id='mentor-mentee'>
-                <Card id='card-mentor'>
-                    <Card.Body>
-                        <Card.Title>BECOME A MENTOR</Card.Title>
-                    </Card.Body>
-                </Card>
+                <Link to='/new-landing/become-mentor'>
+                    <Card id='card-mentor'>
+                        <Card.Body>
+                            <Card.Title>BECOME A MENTOR</Card.Title>
+                        </Card.Body>
+                    </Card>
+                </Link>
                 <Link to='/new-landing/become-mentee'>
                     <Card id='card-mentee'>
                         <Card.Body>

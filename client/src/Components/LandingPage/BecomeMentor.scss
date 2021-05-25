@@ -1,0 +1,36 @@
+#apply-btn {
+    display: grid;
+    place-items: center;
+    // height: 50vh;
+
+    a {
+        color: black;
+        padding-bottom: 8px;
+        background: linear-gradient(currentColor 0 0) left 0 bottom 4px,
+            linear-gradient(currentColor 0 0) right 0 bottom 4px;
+        background-size: 50% 3px;
+        background-repeat: no-repeat;
+        transition: 0.3s linear, background-size 0.3s 0.3s;
+        text-decoration: none !important;
+
+        &:hover {
+            background-position: left 0 bottom 6px, right 0 bottom 0;
+            background-size: 100% 3px;
+        }
+
+        h1 {
+            padding: 15px;
+            cursor: pointer;
+        }
+    }
+}
+
+#why-join {
+    // background-color: lightgreen;
+
+    #why-join-img {
+        img {
+            width: 100%;
+        }
+    }
+}
