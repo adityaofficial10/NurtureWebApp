@@ -20,17 +20,24 @@ export default function Navbar() {
     });
 
     return (
-        <RBNavbar fixed='top' style={{ backgroundColor: pos === 'top' ? 'transparent' : 'white' }}>
-            <RBNavbar.Brand className='mr-auto'>
+        <RBNavbar
+            expand='md'
+            fixed='top'
+            // style={{ backgroundColor: pos === 'top' ? 'transparent' : 'white' }}
+        >
+            <RBNavbar.Brand>
                 <img src={nurture} style={{ width: '50px' }} className='rounded mr-3' />
             </RBNavbar.Brand>
-            <Nav>
-                <Nav.Link>About Us</Nav.Link>
-                {/* <Nav.Link>Become a Mentor</Nav.Link> */}
-                {/* <Nav.Link>Become a Mentee</Nav.Link> */}
-                {/* <Nav.Link>Donate</Nav.Link> */}
-                <Nav.Link>Contact Us</Nav.Link>
-            </Nav>
+            <RBNavbar.Toggle aria-controls='responsive-navbar' />
+            <RBNavbar.Collapse id='responsive-navbar'>
+                <Nav className='py-3 py-md-0'>
+                    <Nav.Link>About Us</Nav.Link>
+                    <Nav.Link>Become a Mentor</Nav.Link>
+                    <Nav.Link>Become a Mentee</Nav.Link>
+                    <Nav.Link>Donate</Nav.Link>
+                    <Nav.Link>Contact Us</Nav.Link>
+                </Nav>
+            </RBNavbar.Collapse>
         </RBNavbar>
     );
 }
