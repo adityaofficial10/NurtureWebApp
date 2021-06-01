@@ -7,9 +7,9 @@ const {checkIfFree} = require('./utility');
 
 module.exports = {
 
-  allotSlot: function(userName, event, slot){
+  allotSlot: function(userName, session, slot){
     console.log(slot);
-    return checkIfFree(event.mentor, slot).then(
+    return checkIfFree(session.mentor, slot).then(
       (ok) => ok,
       (err) => err,
     );

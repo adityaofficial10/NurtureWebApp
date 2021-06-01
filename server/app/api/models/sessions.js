@@ -2,10 +2,9 @@
 const mongoose = require('mongoose');
 
 // Define a schema
-
 const Schema = mongoose.Schema;
 
-const SlotSchema = new Schema({
+const SessionSchema = new Schema({
 
   mentor: {
     type: Schema.Types.ObjectId,
@@ -14,13 +13,20 @@ const SlotSchema = new Schema({
   },
   mentorName: {
     type: String,
+    required: true,
+  },
+  mentee: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+    required: true,
+  },
+  menteeName: {
+    type: String,
+    required: true,
   },
   startTime: {
     type: Date,
     required: true,
-  },
-  content: {
-    type: String,
   },
   link: {
     type: String,
@@ -34,10 +40,14 @@ const SlotSchema = new Schema({
     type: Date,
     required: true,
   },
-  available: {
+  sessionNumber: {
+    type: Schema.Types.Number,
+    required: true,
+  },
+  completed: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
-module.exports = SlotSchema;
+module.exports = SessionSchema;

@@ -47,4 +47,4 @@ MentorSchema.pre('save', function(next){
   next();
 });
 
-module.exports = mongoose.model('Mentor', MentorSchema);
+module.exports = MentorSchema;

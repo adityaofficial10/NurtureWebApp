@@ -1,8 +1,4 @@
 'use strict';
-var mentorModel = require('../models/mentors');
-var userModel = require('../models/Users');
-var adminModel = require('../models/admins');
-var eventModel = require('../models/events');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const { sendEmailOnSignIn } = require('../helpers/mail');
@@ -11,6 +7,7 @@ module.exports = {
 
   login: function(req, res, next) {
 
+    // eslint-disable-next-line no-undef
     adminModel.findOne({
       email: req.body.email,
     }, function(err, adminInfo) {
@@ -68,6 +65,7 @@ module.exports = {
   },
   getMentors: function(req, res, next) {
     let mentorList = [];
+    // eslint-disable-next-line no-undef
     mentorModel.find({}, function(err, mentors) {
       if (err)
         next(err);
@@ -99,6 +97,7 @@ module.exports = {
   },
   getScheduledEvents: function(req, res, next) {
 
+    // eslint-disable-next-line no-undef
     eventModel.findOne({
       mentor: req.body.mentorId,
     }, function(err, eventInfo) {
@@ -106,6 +105,7 @@ module.exports = {
         next(err);
       else {
         if (eventInfo){
+          // eslint-disable-next-line no-undef
           userModel.findById(eventInfo.student).then(userInfo => {
             res.json({code: 1, status: 'Success',
               msg: 'Mentee Details Fetched..', data: userInfo});

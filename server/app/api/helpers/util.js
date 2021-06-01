@@ -3,10 +3,8 @@ require('dotenv').config({
   path: 'config/.env',
 });
 
-const userModel = require('../models/Users');
-const mentorModel = require('../models/mentors');
-const adminModel = require('../models/admins');
-const slotModel = require('../models/slots');
+let MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY',
+  'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
 
 
 module.exports = {
@@ -75,12 +73,20 @@ module.exports = {
     const newTime = String(hours + ':' + minutes + ' ' + newformat);
     return newTime;
   },
+  convertDateToStandard: function(time) {
+    var date = new Date(time);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var res = day + ' ' + MONTHS[month];
+    console.log(res);
+    return res;
+  },
   compareTime: function(t1, t2){
 
+    t1 = new Date(t1);
+    t2 = new Date(t2);
     t1.setHours(0, 0, 0, 0);
     t2.setHours(0, 0, 0, 0);
-    console.log(t1);
-    console.log(t2);
     return (t1.valueOf() === t2.valueOf());
   },
 };

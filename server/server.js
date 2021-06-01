@@ -91,25 +91,28 @@ app.get('/favicon.ico', function(req, res) {
   res.sendStatus(204);
 });
 
+
 // Route for uploading a single file
 app.post('/upload/single', upload.single('file'), (req, res, next) => {
+  console.log("Hello");
   console.log(req.file);
-  let newImage = new imageModel({
-    caption: req.body.caption,
+  // eslint-disable-next-line new-cap
+  imageModel.create({
     filename: req.body.filename,
     fileId: req.file.id,
-  });
-  newImage.save().then((image) => {
-    res.json({status: 200, message: 'File uploaded successfully', data: image});
-  }).catch((err) => {
-    console.log(err);
-    res.json({status: 500, message: err});
+  }, function(err, image) {
+    if (err)
+      res.json({status: 500, message: err});
+    else
+      res.json({status: 200,
+        message: 'File uploaded successfully', data: image});
   });
 });
 
 // Route for uploading multiple files
 app.post('/upload/multiple', upload.array('file', 5), (req, res, next) => {
-  res.json({status: 200, message: 'Files uploaded successfully...'});
+  console.log(req.file);
+  res.json({code: 1, status: 200, message: 'Files uploaded successfully...'});
 });
 
 function validateUser(req, res, next) {
@@ -121,6 +124,7 @@ function validateUser(req, res, next) {
       } else {
       // add user id to request
         req.body.userId = decoded.id;
+        // eslint-disable-next-line no-undef
         userModel.findById(decoded.id, function(err, userInfo){
           if (err)
             next(err);
@@ -143,6 +147,7 @@ function validateMentor(req, res, next) {
       } else {
       // add user id to request
         req.body.mentorId = decoded.id;
+        // eslint-disable-next-line no-undef
         mentorModel.findById(decoded.id, function(err, mentorInfo){
           if (err)
             next(err);
@@ -187,9 +192,10 @@ createMongoConnection(mongoURI).then((connection) => {
   = connection.model('Event', require('./app/api/models/events'));
   global.slotModel
   = connection.model('Slot', require('./app/api/models/slots'));
+  global.sessionModel
+  = connection.model('Session', require('./app/api/models/sessions'));
   global.imageModel
   = connection.model('Image', require('./app/api/models/images'));
-
   console.log('=> MongoDB Database connected...');
   connection.on('error',
     console.error.bind(console, 'MongoDB connection error:'));
@@ -208,3 +214,4 @@ createMongoConnection(mongoURI).then((connection) => {
 }).catch((err) => {
   console.log(err);
 });
+

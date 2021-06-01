@@ -1,10 +1,7 @@
 'use strict';
-const userModel = require('../models/Users');
-const eventModel = require('../models/events');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendMailOnRegister, sendEmailOnSignIn } = require('../helpers/mail');
-const { printUsers } = require('../helpers/maps');
 const { checkIfUserExists } = require('../helpers/util');
 
 module.exports = {
@@ -43,19 +40,24 @@ module.exports = {
       if (err) {
         next(err);
       } else {
-        if (bcrypt.compareSync(req.body.password, userInfo.password)) {
-          const token = jwt.sign({id: userInfo._id},
-            req.app.get('secretKey'), { expiresIn: '1h' });
-          res.cookie('token', token, {
-            maxAge: 1000 * 60 * 60, // 1 hour
-          });
-          sendEmailOnSignIn(userInfo);
-          printUsers();
-          res.json({code: 1, status: 'success',
-            message: 'user found!!!', data: {user: userInfo, token: token}});
+        if (userInfo) {
+          if (bcrypt.compareSync(req.body.password, userInfo.password)) {
+            const token = jwt.sign({id: userInfo._id},
+              req.app.get('secretKey'), { expiresIn: '1h' });
+            res.cookie('token', token, {
+              maxAge: 1000 * 60 * 60, // 1 hour
+            });
+            sendEmailOnSignIn(userInfo);
+            res.json({code: 1, status: 'success',
+              message: 'user found!!!', data: {user: userInfo, token: token}});
+          } else {
+            res.json({code: 0, status: 'error',
+              message: 'Invalid email or password..', data: null});
+          }
         } else {
           res.json({code: 0, status: 'error',
-            message: 'Invalid email or password..', data: null});
+            message: 'There is no account associated with this email',
+            data: null});
         }
       }
     });

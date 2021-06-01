@@ -1,6 +1,4 @@
 'use strict';
-const mentorModel = require('../models/mentors');
-const userModel = require('../models/Users');
 
 module.exports = {
 

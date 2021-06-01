@@ -10,12 +10,18 @@ const DB = process.env.MONGO_DATABASE_NAME;
 const mongoDB =
 `mongodb+srv://${username}:` +
 `${password}@cluster0.jgt5f.mongodb.net/${DB}?retryWrites=true&w=majority`;
-let connect = mongoose.createConnection(mongoDB,
-  {useNewUrlParser: true, useUnifiedTopology: true});
+
+async function createMongoConnection(mongoDB) {
+
+  let connect = await mongoose.createConnection(mongoDB,
+    {useNewUrlParser: true, useUnifiedTopology: true});
+  return connect;
+}
+
 mongoose.Promise = global.Promise;
 
 
 module.exports = {
-  connection: connect,
+  createMongoConnection,
   mongoURI: mongoDB,
 };
