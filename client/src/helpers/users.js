@@ -82,8 +82,6 @@ export async function getSlotsOfMentors(){
 export async function bookSlot(d){
 
     const de = {
-        'title':'Event',
-        'description':'Testing going on.',
         'mentorId':d.mentor,
         'mentorName':d.mentorName,
         'date':d.date,
@@ -91,28 +89,43 @@ export async function bookSlot(d){
         'endTime':d.endTime
     };
     console.log(de);
-    const resp = await instance.post('/events',querystring.stringify(de),{withCredentials:true});
+    const resp = await instance.post('/userDashboard/bookSession',querystring.stringify(de),{withCredentials:true});
     return resp.data;
 }
 
-export async function getUserDashboard(){
+export async function completeSession (d) {
+    const resp = await instance.post('/userDashboard/completeSession', querystring.stringify({mentorid: d.mentorId, sessionNumber: d.sessionNumber}), {withCredentials: true});
+    return resp.data;
+}
 
-    let urlOne = 'http://localhost:4000/userDashboard/slots';
+export async function cancelEngagement() {
+    const resp = await instance.post('/userDashboard/cancel', querystring.stringify({}), {withCredentials: true});
+    return resp.data;
+}
+
+export async function getUserDashboard(date){
+
+    let urlOne = '/userDashboard/slots';
     let urlTwo = 'http://localhost:4000/userDashboard/event';
+    let urlThree = '/userDashboard/getSessions';
     
-    const reqOne = axios.get(urlOne,{withCredentials:true});
+    const reqOne = instance.post(urlOne, querystring.stringify({ date: new Date(date).toDateString() }),{withCredentials:true});
     const reqTwo = axios.post(urlTwo,{},{withCredentials:true});
     const responses = await axios.all([reqOne,reqTwo]);
+    const resp = await instance.post(urlThree, querystring.stringify({}), {withCredentials: true});
     
     const userData = {
         'slots':responses[0].data.data,
         'mentorDetails':responses[1].data.data,
     };
     if(responses[0].data.code === -1 || responses[1].data.code === -1)
-    userData.authenticated = 0;
+      userData.authenticated = 0;
     else
-    userData.authenticated = 1;
+      userData.authenticated = 1;
     console.log(userData);
+    if(resp && resp.data) {
+        userData.sessions = resp.data.data;
+    }
     const def = {
         'mentorId':userData.mentorDetails?userData.mentorDetails.mentor:null
     };

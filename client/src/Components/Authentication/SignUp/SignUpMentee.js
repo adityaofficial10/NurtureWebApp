@@ -59,7 +59,7 @@ class SignUpMentee extends React.Component {
                                     <i className="feather icon-user-plus auth-icon"/>
                                 </div>
                                 <form noValidate onSubmit = {this.onSubmit}>
-                                <h3 className="mb-4">Sign up</h3>
+                                <h3 className="mb-4">Mentee Registration</h3>
                                 <br></br>
                                 <p>{ msg }</p>
                                 <div className="input-group mb-3">
