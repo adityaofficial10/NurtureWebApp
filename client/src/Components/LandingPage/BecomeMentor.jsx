@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Button, Col, Container, Form, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import menteeImg from '../../assets/images/mentee.png';
-import menteeSvg from '../../assets/images/mentee.svg';
+import mentorSvg from '../../assets/images/mentor.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './BecomeMentee.scss';
+import './BecomeMentor.scss';
 
-export default function BecomeMentee() {
+export default function BecomeMentor() {
     return (
         <>
             <Navbar variant='dark' bg='dark'>
@@ -25,10 +24,10 @@ export default function BecomeMentee() {
                     <div className='container'>
                         <div className='row'>
                             <div className='col-md py-3' id='why-join-img'>
-                                <img className='img-fluid' src={menteeSvg} />
+                                <img className='img-fluid' src={mentorSvg} />
                             </div>
                             <div className='col-md py-3' id='why-join-content'>
-                                <h1 className='mb-5 text-center'>WHY YOU SHOULD BECOME A MENTEE</h1>
+                                <h1 className='mb-5 text-center'>WHY YOU SHOULD BECOME A MENTOR</h1>
                                 <p className='text-justify'>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
                                     lacinia porta lorem at condimentum. Etiam nec nunc id nulla rutrum
@@ -53,7 +52,7 @@ export default function BecomeMentee() {
                 </div>
                 <div className='pb-5 px-5 text-center' id='apply-btn'>
                     <a href='http://localhost:3000/nurture/auth/signup-decision'>
-                        <h1>APPLY TO BE A MENTEE</h1>
+                        <h1>APPLY TO BE A MENTOR</h1>
                     </a>
                 </div>
             </div>
