@@ -11,6 +11,7 @@ const CareerCounsel = React.lazy(() => import('./Components/CareerCounsel/index.
 const CareerDescription = React.lazy(() => import('./Components/CareerCounsel/CareerDescription.jsx'))
 const LandingPage = React.lazy(() => import('./Components/LandingPage/index.jsx'))
 const BecomeMentee = React.lazy(() => import('./Components/LandingPage/BecomeMentee.jsx'));
+const BecomeMentor = React.lazy(() => import('./Components/LandingPage/BecomeMentor.jsx'));
 const LandingMentee = React.lazy(() => import('./Components/LandingPage/LandingMentee.jsx'));
 
 const route = [
@@ -25,6 +26,7 @@ const route = [
     { path: '/career-counsel/:scheme/:field', name: 'CareerDescription', component: CareerDescription },
     { path: '/new-landing', exact: true, name: 'LandingPage', component: LandingPage },
     { path: '/new-landing/become-mentee', exact: true, name: 'BecomeMentee', component: BecomeMentee },
+    { path: '/new-landing/become-mentor', exact: true, name: 'BecomeMentor', component: BecomeMentor },
     { path: '/new-landing/mentee-landing', exact: true, name: 'LandingMentee', component: LandingMentee }
 ];
 
