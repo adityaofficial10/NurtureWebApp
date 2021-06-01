@@ -24,7 +24,7 @@ class signupDecision extends React.Component {
                                 <Link to="/auth/signup-student">
                                     <button className="btn btn-primary shadow-2 mb-4">Mentee</button>
                                 </Link>
-                                <p className="mb-0 text-muted">Allready have an account? <NavLink to="/auth/signin">Login</NavLink></p>
+                                <p className="mb-0 text-muted">Already have an account? <NavLink to="/auth/login-decision">Login</NavLink></p>
                             </div>
                         </div>
                     </div>

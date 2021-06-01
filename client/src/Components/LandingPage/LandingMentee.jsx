@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Col, Container, Form, Nav, Navbar } from 'react-bootstrap';
-
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './LandingMentee.scss';
 
@@ -11,8 +11,8 @@ export default function BecomeMentee() {
                 <Navbar.Brand className='mr-auto'>NURTURE</Navbar.Brand>
                 <Nav>
                     <Nav.Link>About Us</Nav.Link>
-                    <Nav.Link>Become a Mentor</Nav.Link>
-                    <Nav.Link>Become a Mentee</Nav.Link>
+                    <Nav.Link href="/new-landing/become-mentor">Become a Mentor</Nav.Link>
+                    <Nav.Link href="/new-landing/become-mentor">Become a Mentee</Nav.Link>
                     <Nav.Link>Donate</Nav.Link>
                     <Nav.Link>Contact Us</Nav.Link>
                 </Nav>

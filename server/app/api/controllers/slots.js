@@ -129,8 +129,10 @@ module.exports = {
         for (let slot of slots) {
           if (compareTime(new Date(req.body.date), slot.date)) {
             slotsList.push({
+              mentorId: slot.mentor,
               mentor: slot.mentorName,
               startTime: convertTimeToStandard(slot.startTime),
+              content: slot.content,
             });
             rawSlots.push(slot);
           }

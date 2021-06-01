@@ -5,7 +5,7 @@ import Aux from "../../hoc/_Aux";
 import DEMO from "../../store/constant";
 
 import avatar from '../../assets/images/user/avatar.jpg';
-
+import { IoArrowForwardCircleSharp } from "react-icons/io5";
 import { FiFileText, FiPhone } from "react-icons/fi";
 import { AiOutlineMail } from "react-icons/ai";
 import { AiFillClockCircle } from "react-icons/ai";
@@ -30,6 +30,7 @@ class Mentee extends React.Component {
             mentorCN: 'NA',
             mentorEmail: 'NA',
             msg: '',
+            mentorId: '',
             mentorMsg: 'You have not chosen a mentor yet.',
             loading: true,
             cancellation: false,
@@ -37,6 +38,8 @@ class Mentee extends React.Component {
             alertHeader: '',
             alertMsg: '',
             color: '',
+            slotMsg: '',
+            empty: '',
         }
     }
     componentDidMount(props) {
@@ -59,12 +62,19 @@ class Mentee extends React.Component {
                 this.setState({ msg: '' });
             }
             if (userData.mentorInfo) {
+                this.setState({mentorId: userData.mentorInfo._id});
                 this.setState({ mentorName: userData.mentorDetails.mentorName });
                 this.setState({ mentorCN: userData.mentorInfo.contactNumber });
                 this.setState({ mentorEmail: userData.mentorInfo.email });
                 this.setState({ mentorMsg: '' });
             }
             this.setState({loading: false});
+            if(this.state.slots.length === 0) 
+              this.setState({empty: 'There are no available slots on the selected date.'});
+            else
+              this.setState({empty: ''});
+            if(this.state.mentorName !== 'NA') 
+              this.setState({slotMsg: 'You can not book slots with other mentors as long as you are engaged with one.'})
         });
     }
     onChange = (date) => {
@@ -85,7 +95,20 @@ class Mentee extends React.Component {
                 this.setState({slots: []});
                 this.setState({ rawSlots: []});
             }
+            if (userData.mentorInfo) {
+                this.setState({mentorId: userData.mentorInfo._id});
+                this.setState({ mentorName: userData.mentorDetails.mentorName });
+                this.setState({ mentorCN: userData.mentorInfo.contactNumber });
+                this.setState({ mentorEmail: userData.mentorInfo.email });
+                this.setState({ mentorMsg: '' });
+            }
             this.setState({loading: false});
+            if(this.state.slots.length === 0) 
+              this.setState({empty: 'There are no available slots on the selected date.'});
+            else
+              this.setState({empty: ''});
+            if(this.state.mentorName !== 'NA') 
+              this.setState({slotMsg: 'You can not book slots with other mentors as long as you are engaged with one.'})
         });
     }
 
@@ -128,7 +151,7 @@ class Mentee extends React.Component {
         window.location.reload(false);
     }
     render() {
-        const { slots, mentorName, mentorCN, mentorEmail, msg, mentorMsg, redirect, sessions } = this.state;
+        const { slots, mentorName, mentorCN, mentorEmail, msg, mentorMsg, redirect, sessions, slotMsg, empty } = this.state;
         if (!redirect)
             return (
                 <Aux>
@@ -140,7 +163,9 @@ class Mentee extends React.Component {
                                 </Card.Header>
                                 <Card.Body className='px-0 py-2'>
                                 <LoadingOverlay active = {this.state.loading} spinner text = 'Loading the data...'>
-                                    <h6 className="mb-1">{msg}</h6>
+                                    <h6 className="mb-1" style = {{color: 'red'}}>{slotMsg}</h6>
+                                    <h6 className="mb-1" style = {{color: 'red'}}>{empty}</h6>
+                                    <hr style = {{visibility: 'hidden'}}/>
                                     <TableScrollbar rows={6.5}>
                                         <Table responsive hover>
                                             <tbody>
@@ -149,10 +174,11 @@ class Mentee extends React.Component {
                                                         <td><img className="rounded-circle" style={{ width: '40px' }} src={avatar} alt="activity-user" /></td>
                                                         <td>
                                                             <h6 className="mb-1">{slot.mentor}</h6>
-                                                            <p className="m-0">Lorem Ipsum is simply dummy text of…</p>
+                                                            <p className="m-0">{slot.content}</p>
                                                         </td>
                                                         <td><AiFillClockCircle size="20px" /> {slot.startTime}</td>
-                                                        <td>
+                                                        {mentorName === 'NA' || slot.mentorId === this.state.mentorId ? (
+                                                            <td>
                                                             <Popup trigger={<a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12" >BOOK NOW</a>} modal>
                                                                 {close => (<Card>
                                                                     <Card.Header>
@@ -171,6 +197,7 @@ class Mentee extends React.Component {
                                                                 </Card>)}
                                                             </Popup>
                                                         </td>
+                                                        ) : <br />}
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -187,6 +214,7 @@ class Mentee extends React.Component {
                                 <LoadingOverlay active = {this.state.loading} spinner text = 'Loading the data...'>
                                 <TableScrollbar rows={7.2}>
                                     <Table responsive hover>
+                                        {!sessions ? (<h6 className="mb-1" style = {{color: 'red'}}>You don't have any sessions scheduled.</h6>) : <br />}
                                         <tbody>
                                             {sessions && sessions.map((session, index) => (
                                                 <tr className="unread">
@@ -204,9 +232,17 @@ class Mentee extends React.Component {
                                                 </td>
                                                 {session.scheduled && !session.completed ? (
                                                     <td>
+                                                        <a className="nav-link" href={session.link.toString()}>
+                                                            <IoArrowForwardCircleSharp size="30px" />
+                                                        </a>                                               
+                                                    </td>
+                                                ) : <br />} 
+                                                {session.scheduled && !session.completed ? (
+                                                    <td>
                                                         <button type="submit" className="btn btn-primary shadow-2 mb-6" onClick = {(e) => this.onCompletion(e, session.sessionNumber, session.mentor)}>Complete</button>                                               
                                                     </td>
                                                 ) : <br />}
+                                               
                                             </tr>
                                             ))}
                                         </tbody>

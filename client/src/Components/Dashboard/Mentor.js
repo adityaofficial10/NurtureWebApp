@@ -20,15 +20,15 @@ class Mentor extends React.Component {
             meetingTime: console.log(new Date()),
             content: '',
             link: '',
-            msg: "You don't have a mentee yet.",
             redirect: false,
             sessionMsg: '',
+            menteeMsg: '',
             sessions: [],
             mentees: [],
             loading: true,
             success: false,
             show: false,
-            failure: false
+            failure: false,
         }
     }
 
@@ -79,11 +79,19 @@ class Mentor extends React.Component {
                 this.setState({ mentees: response.mentees });
                 this.setState({ msg: '' });
             }
+            if(!this.state.sessions)
+              this.setState({sessionMsg: `You don't have any upcoming sessions scheduled.`});
+            else
+              this.setState({sessionMsg: ''});
+            if(!this.state.mentees)
+              this.setState({menteeMsg: `You don't have any mentees yet.`})
+            else
+              this.setState({menteeMsg: ''});
             this.setState({ loading: false });
         });
     }
     render() {
-        const { mentees, sessions, msg, redirect, sessionMsg, show, slotBooked } = this.state;
+        const { mentees, sessions, msg, redirect, sessionMsg, show, slotBooked, menteeMsg } = this.state;
         if (!redirect)
             return (
                 <Fragment>
@@ -96,8 +104,9 @@ class Mentor extends React.Component {
                                     </Card.Header>
                                     <Card.Body className='px-0 py-2'>
                                         <LoadingOverlay active={this.state.loading} spinner text='Loading the data...'>
-                                            <TableScrollbar rows={12}>
+                                            <TableScrollbar rows={11.8}>
                                                 <Table responsive hover>
+                                                <h6 className="mb-1" style = {{color: 'red'}}>{sessionMsg}</h6>
                                                     <tbody>
                                                         {sessions && sessions.map((session, index) => (
                                                             <tr className="unread">
@@ -131,6 +140,7 @@ class Mentor extends React.Component {
                                         <LoadingOverlay active={this.state.loading} spinner text='Loading the data...'>
                                             <TableScrollbar rows={7}>
                                                 <Table responsive hover>
+                                                <h6 className="mb-1" style = {{color: 'red'}}>{menteeMsg}</h6>
                                                     <tbody>
                                                         {mentees && mentees.map((mentee, index) => (
                                                             <tr className="unread">

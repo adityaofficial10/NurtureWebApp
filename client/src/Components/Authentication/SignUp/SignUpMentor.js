@@ -80,7 +80,7 @@ class SignUpMentor extends React.Component {
                                 </div>
                                 <button className="btn btn-primary shadow-2 mb-4">Sign up</button>                                      
                                 </form>
-                                <p className="mb-0 text-muted">Allready have an account? <NavLink to="/auth/signin">Login</NavLink></p>
+                                <p className="mb-0 text-muted">Already have an account? <NavLink to="/auth/mentor-signin">Login</NavLink></p>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ class SignUpMentor extends React.Component {
             </Aux>
         );
         else
-        return <Redirect to="/auth/signin"></Redirect>;
+        return <Redirect to="/auth/login-decision"></Redirect>;
 
     }
 }

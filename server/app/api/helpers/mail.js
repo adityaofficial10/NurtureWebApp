@@ -4,6 +4,7 @@ require('dotenv').config({
 });
 
 const { transporter } = require('./emailSender');
+const { convertDateToStandard, convertTimeToStandard } = require('./util');
 const EMAIL = process.env.EMAIL;
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
   sendMailOnRegister: function(user){
 
     var emailText = `Dear ${user.name},` +
-     ' \nYou have registered successfully on Nurture.';
+     ' \nYou have registered successfully on Nurture.\n Thank you';
     var mailOptions = {
       from: EMAIL,
       to: user.email,
@@ -31,7 +32,7 @@ module.exports = {
   sendEmailOnSignIn: function(user){
 
     var emailText = `Dear ${user.name},` +
-    ' \nWe have detected a login on your Nurture account.';
+    ' \nWe have detected a login on your Nurture account.\n Thank you';
     var mailOptions = {
       from: EMAIL,
       to: user.email,
@@ -52,8 +53,9 @@ module.exports = {
     var emailText = `Dear ${user.name},` +
     ' \nYour request for a slot has been approved.' +
     '\nSlot Details are as follows:' +
-     `\n1.Date:${slot.date}\n2.Time:${slot.startTime}.` +
-      '\nCheck your dashboard for more details.';
+     // eslint-disable-next-line max-len
+     `\n1.Date: ${convertDateToStandard(slot.date)}\n2.Time: ${convertTimeToStandard(slot.startTime)}.` +
+      '\nCheck your dashboard for more details.\n Thank you';
     var mailOptions = {
       from: EMAIL,
       to: user.email,

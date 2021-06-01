@@ -62,6 +62,7 @@ module.exports = {
                 date: convertDateToStandard(sessions[x].date),
                 sessionNumber: sessions[x].sessionNumber,
                 scheduled: true,
+                link: sessions[x].link,
                 completed: sessions[x].completed,
                 pending: sessions[x].startTime < new Date(),
               });

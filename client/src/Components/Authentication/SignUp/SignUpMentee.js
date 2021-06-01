@@ -79,7 +79,7 @@ class SignUpMentee extends React.Component {
                                 </div>
                                 <button className="btn btn-primary shadow-2 mb-4">Sign up</button>                                      
                                 </form>
-                                <p className="mb-0 text-muted">Already have an account? <NavLink to="/auth/signin">Login</NavLink></p>
+                                <p className="mb-0 text-muted">Already have an account? <NavLink to="/auth/student-signin">Login</NavLink></p>
                             </div>
                         </div>
                     </div>

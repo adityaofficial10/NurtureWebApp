@@ -63,7 +63,7 @@ module.exports = {
   },
   convertTimeToStandard: function(time){
 
-    var date = time;
+    var date = new Date(time);
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var newformat = hours >= 12 ? 'PM' : 'AM';
