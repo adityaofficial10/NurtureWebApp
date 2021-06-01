@@ -31,6 +31,7 @@ class mentorSignIn extends React.Component {
           password: this.state.password
         };
         login(userData.email,userData.password).then((response)=>{
+            console.log(response);
             if(response.code){
                 console.log("Success");
                 this.setState({ redirect:true }); 
@@ -84,3 +85,4 @@ class mentorSignIn extends React.Component {
 }
 
 export default mentorSignIn;
+

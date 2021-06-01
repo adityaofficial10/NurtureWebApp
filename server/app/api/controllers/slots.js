@@ -1,7 +1,4 @@
 'use strict';
-const slotModel = require('../models/slots');
-const mentorModel = require('../models/mentors');
-
 const { convertTimeToStandard, compareTime } = require('../helpers/util');
 
 module.exports = {
@@ -97,6 +94,8 @@ module.exports = {
       slotModel.create({
         mentor: req.body.mentorId,
         mentorName: req.body.mentorName,
+        content: req.body.content,
+        link: req.body.link,
         startTime: req.body.startTime,
         endTime: req.body.endTime,
         date: req.body.date,
@@ -105,6 +104,7 @@ module.exports = {
           next(err);
         else {
           res.json({
+            code: 1,
             status: 'success',
             message: 'Slot added successfully!!!',
             data: result,
@@ -119,7 +119,6 @@ module.exports = {
 
     let slotsList = [];
     let rawSlots = [];
-    let today = new Date();
     slotModel.find({
       available: true,
     }, function(err, slots) {
@@ -128,7 +127,7 @@ module.exports = {
       } else {
         console.log(slots);
         for (let slot of slots) {
-          if (compareTime(today, slot.date)) {
+          if (compareTime(new Date(req.body.date), slot.date)) {
             slotsList.push({
               mentor: slot.mentorName,
               startTime: convertTimeToStandard(slot.startTime),

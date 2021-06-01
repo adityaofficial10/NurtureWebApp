@@ -1,9 +1,4 @@
 'use strict';
-const mentorModel = require('../models/mentors');
-const userModel = require('../models/Users');
-const requestModel = require('../models/requests');
-const eventModel = require('../models/events');
-const slotModel = require('../models/slots');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {sendMailOnRegister, sendEmailOnSignIn} = require('../helpers/mail');
@@ -124,67 +119,93 @@ module.exports = {
       }
     });
   },
-  getRequests: function(req, res, next) {
-    console.log(req.body);
-    requestModel.find({
-      mentor: req.body.mentorId,
-    }, function(err, requests) {
-      if (err)
-        next(err);
-      else
-        res.json({
-          status: 'success',
-          message: 'Requests for the given mentor found.',
-          data: requests,
-        });
-
-    });
-  },
   getMentors: function(req, res, next) {
     let mentorList = [];
+    var sessionsMap = {};
+    var temp;
     mentorModel.find({}, function(err, mentors) {
       if (err)
         next(err);
       else {
-        for (let mentor of mentors) {
-          mentorList.push({
-            name: mentor.name,
-            email: mentor.email,
-            contactNumber: mentor.contactNumber,
-            available: mentor.available,
-          });
-        }
-        if (mentorList.length)
-          res.json({
-            code: 1,
-            status: 'success',
-            message: 'Mentor List fetched..',
-            data: mentorList,
-          });
-        else
-          res.json({
-            code: 0,
-            status: 'success',
-            message: 'There are currently no registered slots.',
-            data: null,
-          });
+        eventModel.find({}, function(err, events) {
+          if (err)
+            next(err);
+          else {
+            if (events) {
+              for (var x = 0; x < events.length; x++) {
+                if (sessionsMap[events[x].mentor]) {
+                  temp = sessionsMap[events[x].mentor];
+                  sessionsMap[events[x].mentor] = temp + events[x].sessions;
+                } else {
+                  sessionsMap[events[x].mentor] = events[x].sessions;
+                }
+              }
+              for (let mentor of mentors) {
+                var id = sessionsMap[mentor._id];
+                mentorList.push({
+                  id: mentor._id,
+                  name: mentor.name,
+                  email: mentor.email,
+                  contactNumber: mentor.contactNumber,
+                  available: mentor.available,
+                  sessions: id,
+                });
+              }
+              console.log(sessionsMap);
+              console.log(mentorList);
+              if (mentorList.length)
+                res.json({
+                  code: 1,
+                  status: 'success',
+                  message: 'Mentor List fetched..',
+                  data: mentorList,
+                });
+              else
+                res.json({
+                  code: 0,
+                  status: 'success',
+                  message: 'There are currently no registered slots.',
+                  data: null,
+                });
+            }
+          }
+        });
       }
     });
   },
-  getScheduledEvents: function(req, res, next) {
+  getScheduledEvents: async function(req, res, next) {
 
-    eventModel.findOne({
+    var menteesId = [];
+    var menteesList = [];
+    // eslint-disable-next-line no-undef
+    eventModel.find({
       mentor: req.body.mentorId,
-    }, function(err, eventInfo) {
+    }, function(err, events) {
       if (err)
         next(err);
       else {
-        if (eventInfo){
-          userModel.findById(eventInfo.student).then(userInfo => {
-            res.json({code: 1, status: 'Success',
-              msg: 'Mentee Details Fetched..', data: userInfo});
-          }).catch((err) => {
-            console.error(err);
+        if (events && events.length){
+          for (var x = 0; x < events.length; x++) {
+            menteesId.push(events[x].mentee);
+          }
+          userModel.find({_id: { $in: menteesId }}, function(err, mentees) {
+            if (err)
+              next(err);
+            else {
+              if (!mentees || !mentees.length)
+                res.json({code: 0, status: 'Failure',
+                  msg: "You don't have a mentee yet.", data: null});
+              for (var x = 0; x < events.length; x++) {
+                menteesList.push({
+                  menteeName: events[x].menteeName,
+                  sessionsConducted: events[x].sessions,
+                  email: mentees[x].email,
+                  contactNumber: mentees[x].contactNumber,
+                });
+              }
+              res.json({code: 1, status: 'Success',
+                data: menteesList});
+            }
           });
         } else
           res.json({code: 0, status: 'Failure',

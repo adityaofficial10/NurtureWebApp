@@ -22,23 +22,18 @@ const EventSchema = new Schema({
   mentorName: {
     type: String,
   },
-  student: {
+  mentee: {
     type: Schema.Types.ObjectId,
     ref: 'users',
     required: true,
   },
-  date: {
-    type: Date,
-    required: true,
+  menteeName: {
+    type: String,
   },
-  startTime: {
-    type: Date,
-    required: true,
-  },
-  endTime: {
-    type: Date,
+  sessions: {
+    type: Number,
     required: true,
   },
 });
 
-module.exports = mongoose.model('Event', EventSchema);
+module.exports = EventSchema;

@@ -18,7 +18,7 @@ export async function login(email,password){
             'email':email,
             'password':password
         };
-        const resp = await instance.post('http://localhost:4000/mentors/login',querystring.stringify(data),{withCredentials:true});
+        const resp = await instance.post('http://localhost:4000/mentors/login',querystring.stringify(data),{withCredentials:true,});
         return resp.data;
 };
 
@@ -41,13 +41,15 @@ export async function fetchMentors(){
     return mentors.data.data;
 };
 
-export async function putSlot(date,startTime,endTime){
+export async function putSlot(date,startTime,endTime, content, link){
  
     date.setHours(0,0,0,0);
     const data = {
      'date':date.toString(),
      'startTime':startTime.toString(),
-     'endTime':endTime.toString()
+     'endTime':endTime.toString(),
+     'content': content ? content : '',
+     'link': link ? link : ''
     };
     console.log(data);
     const resp = await instance.post('/slots/',querystring.stringify(data),{withCredentials:true});
@@ -55,14 +57,25 @@ export async function putSlot(date,startTime,endTime){
 };
 
 export async function getMentorDashboard(){
-    const resp = await axios.post('http://localhost:4000/request/events',{},{withCredentials:true});
-    return resp.data;
+    const resp1 = await axios.post('http://localhost:4000/request/events',{},{withCredentials:true});
+    const resp2 = await axios.post('http://localhost:4000/request/sessions', {}, {withCredentials: true});
+    var mentorDashboard = {authenticated: true};
+    if(resp1.data) {
+        if(resp1.data.code === -1)
+         mentorDashboard.authenticated = false;
+        mentorDashboard.mentees = resp1.data.data;
+    }
+    if(resp2.data) {
+        mentorDashboard.sessions = resp2.data.data ? resp2.data.data.sessions : null;
+        if(resp2.data.code === -1)
+         mentorDashboard.authenticated = false;
+    }
+    return mentorDashboard;
 };
 
 export async function getMentorDetails(){
 
     const resp = await axios.get('http://localhost:4000/request/mentor',{withCredentials:true});
-    console.log(resp.data);
     return resp.data;
 }
 export async function getSlotsForMentor(){

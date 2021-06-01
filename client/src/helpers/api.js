@@ -8,7 +8,7 @@ const instance = axios.create({
     }
 });
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form- urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.crossDomain = true;
 
 

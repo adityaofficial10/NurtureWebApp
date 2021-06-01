@@ -7,7 +7,7 @@
     "pretest": "eslint --ignore-path .gitignore .",
     "test-unit": "nodemon --exec 'mocha tests/*/**.test.js'",
     "test": "npm run pretest && npm run test-unit",
-    "server": "nodemon server"
+    "start": "nodemon --max-old-space-size=4096 server"
   },
   "author": "",
   "license": "ISC",

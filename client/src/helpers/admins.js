@@ -41,9 +41,18 @@ export async function getAdminDashboard(){
     const adminData = {
         'mentors':response.data.data,
     };
+
+    console.log(adminData);
     if(response.data.code === -1 || response.data.code === -1)
     adminData.authenticated = 0;
     else
     adminData.authenticated = 1;
     return adminData;
+}
+
+export async function handleUpload(data) {
+    console.log(data);
+    const resp = await axios.post('http://localhost:4000/upload/multiple', data, {withCredentials: true});
+    console.log(resp.data);
+    return resp.data;
 }
